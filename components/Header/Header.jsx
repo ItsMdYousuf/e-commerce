@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { RiCustomerService2Line } from "react-icons/ri";
@@ -7,7 +8,9 @@ const Header = () => {
     <div className="bg-gray-300 px-5 py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex items-center justify-center">
-          <h1 className="text-lg font-semibold">E-Commerce</h1>
+          <Link href="/" className="text-lg font-semibold">
+            E-Commerce
+          </Link>
         </div>
         <div className="col-span-6 flex items-center justify-center">
           <input
