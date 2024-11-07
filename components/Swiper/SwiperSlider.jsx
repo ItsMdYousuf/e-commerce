@@ -2,6 +2,7 @@
 
 import "swiper/css"; // Import Swiper core CSS
 import { Swiper, SwiperSlide } from "swiper/react";
+import HeroSlider from "./HeroSlider";
 import "./swiper.css";
 
 const SwiperSlider = () => {
@@ -15,17 +16,21 @@ const SwiperSlider = () => {
       navigation={true} // Enable navigation if needed
     >
       <SwiperSlide className="slider__height">
-        <div className="grid grid-cols-3">
-          <div className="col-span-2 w-full bg-gray-400">
-            <h4>On Trending</h4>
-            <h1 className="capitalize">Autumn Fashion for Man</h1>
-          </div>
-          <div className="col-span-1 bg-gray-200">img</div>
-        </div>
+        <HeroSlider
+          title="Autumn Fashion for Man"
+          subTitle="New Product"
+          productStatus="On Trending"
+        />
       </SwiperSlide>
-      <SwiperSlide className="slider__height">Slide 2</SwiperSlide>
-      <SwiperSlide className="slider__height">Slide 3</SwiperSlide>
-      <SwiperSlide className="slider__height">Slide 4</SwiperSlide>
+      <SwiperSlide className="slider__height">
+        <HeroSlider />
+      </SwiperSlide>
+      <SwiperSlide className="slider__height">
+        <HeroSlider />
+      </SwiperSlide>
+      <SwiperSlide className="slider__height">
+        <HeroSlider />
+      </SwiperSlide>
       {/* Add more slides as needed */}
     </Swiper>
   );

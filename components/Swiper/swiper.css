@@ -44,5 +44,5 @@ body {
 }
 
 .slider__height {
-  @apply h-[500px] w-full;
+  @apply h-[400px] w-full;
 }
