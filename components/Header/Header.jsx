@@ -23,13 +23,13 @@ const Header = () => {
           <div className="flex justify-between">
             <div className="flex w-full justify-between">
               <div>
-                <p className={`${Styles.flex__Center} gap-5 px-5 text-xs`}>
+                <div className={`${Styles.flex__Center} gap-5 px-5 text-xs`}>
                   <RiCustomerService2Line className="text-4xl" />
                   <div>
                     <p className="text-sm leading-5">555-666-055</p>
                     <p className="text-sm leading-5">24/7 Support Center</p>
                   </div>
-                </p>
+                </div>
               </div>
               <div className={`${Styles.flex__Center} px-5`}>
                 <ul className={`${Styles.flex__Center} gap-5 text-xl`}>
