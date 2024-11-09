@@ -8,9 +8,17 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
+// Set Jost as the primary font
+const jostFont = localFont({
+  src: "./fonts/Jost-VariableFont_wght.ttf",
+  variable: "--font-primary",
   weight: "100 900",
 });
 
@@ -23,7 +31,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${jostFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ fontFamily: `var(--font-primary), sans-serif` }}
       >
         <Header />
         {children}

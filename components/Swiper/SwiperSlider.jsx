@@ -2,7 +2,7 @@
 
 import "swiper/css"; // Import Swiper core CSS
 import { Swiper, SwiperSlide } from "swiper/react";
-import MiniCollection from "../MiniCollection";
+import MiniCollection from "../MiniCollection/MiniCollection";
 import HeroSlider from "./HeroSlider";
 import "./swiper.css";
 
