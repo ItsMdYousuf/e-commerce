@@ -1,24 +1,34 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
+import { BsSearch } from "react-icons/bs";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
+
 const Header = () => {
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
   return (
-    <div className="bg-gray-300 px-2 py-2">
+    <div className="bg-gray-300 py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex items-center justify-center">
           <Link href="/" className="text-lg font-semibold">
             E-Commerce
           </Link>
         </div>
-        <div className="col-span-6 flex items-center justify-center">
+        <div className="relative col-span-6 flex items-center justify-end">
           <input
-            className="m-1 w-full rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none"
-            type="search"
+            className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${
+              isInputFocused ? "w-[300px]" : "w-[200px]"
+            }`}
+            type="text"
             placeholder="Search product"
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
           />
+          <BsSearch className="text-md absolute right-5 top-4 cursor-pointer" />
         </div>
         <div className="col-span-4">
           <div className="flex justify-between">
@@ -34,7 +44,7 @@ const Header = () => {
               </div>
               <div className={`${Styles.flex__Center} px-5`}>
                 <ul className={`${Styles.flex__Center} gap-5 text-xl`}>
-                  <li className="">
+                  <li>
                     <FaFacebookF />
                   </li>
                   <li>
