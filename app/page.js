@@ -1,8 +1,10 @@
+import MiniCollection from "@/components/MiniCollection";
+import SwiperSlider from "@/components/Swiper/SwiperSlider";
 
 export default function Home() {
   return (
     <div>
-      <h1>Hello</h1>
+      <SwiperSlider />
     </div>
   );
 }
