@@ -1,5 +1,5 @@
 "use client";
-import Button from "../Button";
+import Button from "../Buttons/Button";
 
 const HeroSlider = ({ subTitle, title, productStatus }) => {
   return (

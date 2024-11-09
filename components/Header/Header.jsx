@@ -6,7 +6,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
 const Header = () => {
   return (
-    <div className="bg-gray-300 px-5 py-2">
+    <div className="bg-gray-300 px-2 py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex items-center justify-center">
           <Link href="/" className="text-lg font-semibold">
