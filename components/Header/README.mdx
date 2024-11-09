@@ -1,3 +1,17 @@
 # Header
 
 using icons from `npm i react-icons `
+
+## Search Input Click to width increase method:
+
+```
+<input className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${
+         isInputFocused ? "w-[300px]" : "w-[200px]"
+      }`}
+      type="text"
+      placeholder="Search product"
+      onFocus={() => setIsInputFocused(true)}
+      onBlur={() => setIsInputFocused(false)}
+/>
+
+```
