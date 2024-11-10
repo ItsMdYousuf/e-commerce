@@ -62,7 +62,7 @@ const ProductsDetails = () => {
     } = product;
 
     return (
-        <div>
+        <div className="px-4">
             <main className="py-6">
                 <div className="container py-4 mx-auto gap-8 flex item-center flex-col md:flex-row bg-white shadow-lg rounded-lg">
                     {/* Product Image */}

@@ -30,7 +30,7 @@ const Products = () => {
   return (
     <div className="container px-10 py-20 ">
       <h2 className="mb-5 text-center text-3xl">Products</h2>
-      <div className="grid grid-cols-4 gap-5 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-center">
         {
           loading == true && <h2 className="text-center"> loading...</h2>
         }
