@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { MainContext } from "@/app/context/MainContext";
 
 const ProductsDetails = () => {
     const { id } = useParams();
@@ -9,10 +10,10 @@ const ProductsDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const handleAddedCart = () => {
-        alert("Added to cart");
-    };
-
+    // const handleAddedCart = () => {
+    //     alert("Added to cart");
+    // };
+    const { handleAddedCart } = useContext(MainContext)
     useEffect(() => {
         const fetchData = async () => {
             try {

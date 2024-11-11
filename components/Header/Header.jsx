@@ -18,9 +18,8 @@ const Header = () => {
         </div>
         <div className="relative col-span-6 flex items-center justify-end">
           <input
-            className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${
-              isInputFocused ? "w-[300px]" : "w-[200px]"
-            }`}
+            className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${isInputFocused ? "w-[300px]" : "w-[200px]"
+              }`}
             type="text"
             placeholder="Search product"
             onFocus={() => setIsInputFocused(true)}
@@ -41,12 +40,12 @@ const Header = () => {
                 </div>
               </div>
               <div className={`${Styles.flex__Center} gap-5`}>
-                <Link className="text-lg" href="/">
-                  Sing in
+                <Link className="text-lg" href={'/auth/signup'}>
+                  Sing Up
                 </Link>
                 <Link
                   className="flex items-center justify-center gap-2 text-lg"
-                  href="/"
+                  href="/cart"
                 >
                   <IoCartOutline className="text-2xl" />
                   Cart
