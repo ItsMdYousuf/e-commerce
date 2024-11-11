@@ -1,9 +1,42 @@
+"use client";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { GoHeart } from "react-icons/go";
 import { IoEyeOutline } from "react-icons/io5";
 import Button from "../../components/Buttons/Button";
-import Link from "next/link";
 
 const ProductItem = ({ item }) => {
+  // State to control the modal visibility
+  const [showModal, setShowModal] = useState(false);
+
+  // Reference to the modal content
+  const modalRef = useRef(null);
+
+  // Function to open the modal
+  const openModal = () => setShowModal(true);
+
+  // Function to close the modal
+  const closeModal = () => setShowModal(false);
+
+  // Close modal if clicking outside of modal content
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+
+    if (showModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal]);
+
   return (
     <div className="group overflow-hidden border-2 bg-gray-100">
       <div className="relative flex flex-col items-center justify-center pb-2">
@@ -18,9 +51,11 @@ const ProductItem = ({ item }) => {
 
         {/* Slide-in Icons from Right on Hover */}
         <div className="absolute right-3 top-3 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
-          <Link href={`/products/${item.id}`}>
-            <IoEyeOutline className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white" />
-          </Link>
+          {/* eye button */}
+          <IoEyeOutline
+            className="h-8 w-8 cursor-pointer rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
+            onClick={openModal}
+          />
           <GoHeart className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white" />
         </div>
 
@@ -29,10 +64,33 @@ const ProductItem = ({ item }) => {
           className="absolute bottom-2 -z-10 translate-y-8 opacity-0 shadow-none transition-all duration-300 ease-in-out group-hover:z-10 group-hover:translate-y-0 group-hover:opacity-100"
         />
       </div>
-      <div className="border-t-2 pt-2">
-        <h4 className="text-lg font-semibold">{item.title}</h4>
-        <p className="text-md">$800</p>
+      <div className="border-t-2 p-2">
+        <h4 className="text-lg font-semibold">
+          <Link href={`/products/${item.id}`}>Product</Link>
+        </h4>
+        <p className="text-lg">$800</p>
       </div>
+
+      {/* Modal for product details */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div
+            ref={modalRef}
+            className="relative w-96 rounded-md bg-white p-6 shadow-lg"
+          >
+            <button
+              className="absolute right-2 top-2 text-xl text-gray-600 hover:text-gray-800"
+              onClick={closeModal}
+            >
+              ×
+            </button>
+            <h2 className="mb-4 text-xl font-semibold">{item.name}</h2>
+            <img src={item.thumbnail} alt="product" className="mb-4" />
+            <p className="text-gray-700">{item.description}</p>
+            <p className="mt-4 text-lg font-bold">${item.price}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
