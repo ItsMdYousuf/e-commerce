@@ -11,14 +11,12 @@ const Header = () => {
   return (
     <div className="bg-gray-300 px-5 py-2">
       <div className="grid grid-cols-12">
-        <div className="col-span-2 flex items-center justify-center bg-orange-400">
+        <div className="col-span-2 flex items-center justify-center">
           <Link href="/" className="text-lg font-semibold">
             E-Commerce
           </Link>
         </div>
-        <div className="relative col-span-6 flex items-center justify-end bg-purple-400">
-          <nav></nav>
-          <Link href="/"></Link>
+        <div className="relative col-span-6 flex items-center justify-end">
           <input
             className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${
               isInputFocused ? "w-[300px]" : "w-[200px]"
@@ -30,7 +28,7 @@ const Header = () => {
           />
           <BsSearch className="text-md absolute right-5 top-4 cursor-pointer" />
         </div>
-        <div className="col-span-4 bg-green-400">
+        <div className="col-span-4">
           <div className="flex justify-between">
             <div className="flex w-full items-center justify-between pl-4">
               <div>
@@ -42,7 +40,10 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className={`${Styles.flex__Center} gap-5`}>
+                <Link className="text-lg" href="/">
+                  Sing in
+                </Link>
                 <Link
                   className="flex items-center justify-center gap-2 text-lg"
                   href="/"

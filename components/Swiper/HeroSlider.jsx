@@ -1,7 +1,7 @@
 "use client";
 import Button from "../Buttons/Button";
 
-const HeroSlider = ({ subTitle, title, productStatus }) => {
+const HeroSlider = ({ subTitle, title, productStatus, img }) => {
   return (
     <div className="slider__height grid w-full grid-cols-3 bg-pink-50 px-10">
       <div className="col-span-2">
@@ -12,7 +12,9 @@ const HeroSlider = ({ subTitle, title, productStatus }) => {
           <Button children="Shop Now" />
         </div>
       </div>
-      <div className="col-span-1">img</div>
+      <div className="col-span-1 ">
+        <img className="rounded-sm p-4" src={img} alt="" />
+      </div>
     </div>
   );
 };
