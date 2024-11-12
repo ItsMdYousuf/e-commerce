@@ -9,7 +9,7 @@ const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   return (
-    <div className="bg-gray-300 px-5 py-2">
+    <div className="bg-white px-5 py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex items-center justify-center">
           <Link href="/" className="text-lg font-semibold">
@@ -18,7 +18,7 @@ const Header = () => {
         </div>
         <div className="relative col-span-6 flex items-center justify-end">
           <input
-            className={`m-1 rounded-lg border-[1.5px] border-purple-400 px-3 py-2 outline-none transition-all duration-300 ${
+            className={`m-1 rounded-lg border-[1.5px] border-slate-900 px-3 py-2 outline-none transition-all duration-300 ${
               isInputFocused ? "w-[300px]" : "w-[200px]"
             }`}
             type="text"
@@ -46,7 +46,7 @@ const Header = () => {
                 </Link>
                 <Link
                   className="flex items-center justify-center gap-2 text-lg"
-                  href="/"
+                  href="/cart"
                 >
                   <IoCartOutline className="text-2xl" />
                   Cart

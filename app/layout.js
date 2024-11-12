@@ -35,7 +35,9 @@ export default function RootLayout({ children }) {
         style={{ fontFamily: `var(--font-primary), sans-serif` }}
       >
         <Header />
-        {children}
+        <div className="selection:bg-pink-300 selection:text-white">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
