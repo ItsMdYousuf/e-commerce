@@ -1,11 +1,12 @@
 "use client";
 
 import { createContext, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export const MainContext = createContext();
 
 const handleAddedCart = () => {
-  alert("Added to cart");
+  toast.success("This is a success message!");
 };
 export default function ContextProvider({ children }) {
   return (
