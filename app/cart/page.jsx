@@ -1,12 +1,11 @@
-import React from 'react'
+import Title from "../../components/Title";
 
-const CartPage = () => {
-    return (
-        <div className='h-screen flex justify-center items-center'>
-            <h2 className='text-5xl'>
-                CartPage</h2>
-        </div>
-    )
-}
+const Cart = () => {
+  return (
+    <div className="min-h-screen">
+      <Title titleName="Cart page" />
+    </div>
+  );
+};
 
-export default CartPage
+export default Cart;

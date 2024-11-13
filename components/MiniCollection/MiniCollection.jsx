@@ -1,10 +1,11 @@
 "use client";
+import Title from "../Title";
 import MiniItems from "./MiniItems";
 
 const MiniCollection = () => {
   return (
     <div className="mb-20 bg-white">
-      <p>Mini Collection</p>
+      <Title titleName="Min Collection" />
       <div className="grid grid-flow-col grid-cols-3 gap-4 px-5">
         <div className="row-span-3 bg-red-50">
           <MiniItems />

@@ -36,12 +36,11 @@ export default function RootLayout({ children }) {
         className={`${jostFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ fontFamily: `var(--font-primary), sans-serif` }}
       >
-        <ContextProvider>
-          <Header />
+        <Header />
+        <div className="selection:bg-pink-300 selection:text-white">
           {children}
-          <Toaster position="top-center" />
-          <Footer />
-        </ContextProvider>
+        </div>
+        <Footer />
       </body>
     </html>
   );
