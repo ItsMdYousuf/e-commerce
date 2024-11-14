@@ -1,3 +1,4 @@
+"use client";
 const Title = ({ titleName, className }) => {
   return (
     <h1

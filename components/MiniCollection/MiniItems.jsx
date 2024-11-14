@@ -1,5 +1,6 @@
 "use client";
 
+import { productsLoad } from "@/app/api/productsData";
 import Link from "next/link";
 
 const MiniItems = () => {
