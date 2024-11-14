@@ -66,7 +66,7 @@ const ProductItem = ({ item }) => {
       </div>
       <div className="border-t-2 p-2">
         <h4 className="text-lg font-semibold">
-          <Link href={`/products/${item.id}`}>Product</Link>
+          <Link href={`/products/${item.id}`}>{item.title}</Link>
         </h4>
         <p className="text-lg">$800</p>
       </div>
@@ -84,10 +84,20 @@ const ProductItem = ({ item }) => {
             >
               ×
             </button>
-            <h2 className="mb-4 text-xl font-semibold">{item.name}</h2>
             <img src={item.thumbnail} alt="product" className="mb-4" />
-            <p className="text-gray-700">{item.description}</p>
-            <p className="mt-4 text-lg font-bold">${item.price}</p>
+            <div className="">
+              <Link
+                className="mb-2 text-2xl font-semibold"
+                href={`/products/${item.id}`}
+              >
+                {item.title}
+              </Link>
+              <p className="text-gray-700">{item.description}</p>
+              <div className="flex w-full items-center justify-center gap-5">
+                <p className="mt-4 text-lg font-bold">${item.price}</p>
+                <Button children="Add to Cart" />
+              </div>
+            </div>
           </div>
         </div>
       )}
