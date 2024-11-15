@@ -2,8 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import ContextProvider from "./context/MainContext";
+import ContextProvider, { MainContext } from "./context/MainContext";
 import { Toaster } from "react-hot-toast";
+import AddToCart from "./context/AddToCart";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
