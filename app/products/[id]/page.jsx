@@ -1,13 +1,16 @@
 "use client";
+import { AddToCart } from "@/app/context/AddToCart";
+import Title from "@/components/Title";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 const ProductsDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [mainImage, setMainImage] = useState(""); // Main image state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { handleAddedCart } = useContext(AddToCart);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +30,8 @@ const ProductsDetails = () => {
 
     fetchData();
   }, [id]);
+
+  console.log(product);
 
   if (loading) {
     return (
@@ -119,31 +124,63 @@ const ProductsDetails = () => {
                 <h3>
                   <span className="font-semibold">Brand:</span>
                   {brand}
-                </h3>{" "}
+                </h3>
                 <h3>
                   <span className="font-semibold">Availability Status :</span>
                   {availabilityStatus}
-                </h3>{" "}
+                </h3>
                 {/* here rating component */}
                 <h3>
-                  {" "}
-                  <span className="font-semibold">
-                    Warranty Information:
-                  </span>{" "}
+                  <span className="font-semibold">Warranty Information:</span>
                   {warrantyInformation}
-                </h3>{" "}
+                </h3>
                 <h3>
                   <span className="font-semibold">Shipping Information: </span>
                   {shippingInformation}
-                </h3>{" "}
+                </h3>
                 <h3>
                   <span className="font-semibold">Return Policy: </span>
                   {returnPolicy}
-                </h3>{" "}
+                </h3>
               </div>
             </div>
           </div>
         </div>
+        {/* Reviews section */}
+        <section>
+          <Title titleName="Reviews" className="" />
+          <div>
+            {reviews.map((review, index) => (
+              <div key={index} className="my-2 w-full">
+                <div className="border-2 border-gray-300 p-2">
+                  <div className="flex">
+                    <h2 className="leading-1 font-semibold capitalize">
+                      {review.reviewerName}
+                    </h2>
+                    <p className="pl-5 text-gray-600">{review.reviewerEmail}</p>
+                  </div>
+                  <div className="text-sm">
+                    <p className="text-gray-500">Date: {review.date}</p>
+                    <p className="">Comment: {review.comment}</p>
+                    <div className="flex items-center">
+                      <span className="mr-2 font-semibold">Rating:</span>
+                      <div className="flex">
+                        {/* Dynamically render stars based on review.rating */}
+                        {Array.from({ length: review.rating }, (_, i) => (
+                          <FaStar
+                            key={i}
+                            className="text-yellow-500"
+                            size={20}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );

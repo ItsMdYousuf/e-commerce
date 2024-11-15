@@ -13,6 +13,7 @@ const Products = () => {
     const fetchData = async () => {
       const products = await productsLoad();
       setData(products);
+
       setLoading(false);
     };
 

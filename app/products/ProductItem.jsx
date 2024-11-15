@@ -1,24 +1,19 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GoHeart } from "react-icons/go";
 import { IoEyeOutline } from "react-icons/io5";
 import Button from "../../components/Buttons/Button";
+import { AddToCart } from "../context/AddToCart";
 
 const ProductItem = ({ item }) => {
-  // State to control the modal visibility
+  const { addToCart } = useContext(AddToCart); // Get addToCart from context
   const [showModal, setShowModal] = useState(false);
-
-  // Reference to the modal content
   const modalRef = useRef(null);
 
-  // Function to open the modal
   const openModal = () => setShowModal(true);
-
-  // Function to close the modal
   const closeModal = () => setShowModal(false);
 
-  // Close modal if clicking outside of modal content
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -49,29 +44,33 @@ const ProductItem = ({ item }) => {
           className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
         />
 
-        {/* Slide-in Icons from Right on Hover */}
         <div className="absolute right-3 top-3 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
-          {/* eye button */}
           <IoEyeOutline
             className="h-8 w-8 cursor-pointer rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
             onClick={openModal}
           />
           <GoHeart className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white" />
         </div>
-
         <Button
+          onClick={() => addToCart(item)} // Add item to cart
           children="Shop Now"
           className="absolute bottom-2 -z-10 translate-y-8 opacity-0 shadow-none transition-all duration-300 ease-in-out group-hover:z-10 group-hover:translate-y-0 group-hover:opacity-100"
         />
       </div>
       <div className="border-t-2 p-2">
         <h4 className="text-lg font-semibold">
-          <Link href={`/products/${item.id}`}>{item.title}</Link>
+          <Link className="hover:underline" href={`/products/${item.id}`}>
+            {item.title}
+          </Link>
         </h4>
-        <p className="text-lg">$800</p>
+        <div className="flex justify-between">
+          <p className="text-lg">${item.price}</p>
+          <p>
+            Review: ({item.reviews.length}) {item.rating}
+          </p>
+        </div>
       </div>
 
-      {/* Modal for product details */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div
@@ -95,7 +94,10 @@ const ProductItem = ({ item }) => {
               <p className="text-gray-700">{item.description}</p>
               <div className="flex w-full items-center justify-center gap-5">
                 <p className="mt-4 text-lg font-bold">${item.price}</p>
-                <Button children="Add to Cart" />
+                <Button
+                  onClick={() => addToCart(item)}
+                  children="Add to Cart"
+                />
               </div>
             </div>
           </div>

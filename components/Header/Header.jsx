@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoCartOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
@@ -14,6 +14,10 @@ const Header = () => {
   const [searchProduct, setSearchProduct] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for dropdown visibility
+  const dropdownRef = useRef(null); // Add dropdownRef here
 
   // Fetch the products from the API
   useEffect(() => {
@@ -42,8 +46,40 @@ const Header = () => {
     setFilteredProducts(results);
   };
 
+  // Header Scroll
+  const handleScroll = () => {
+    if (window.scrollY > lastScrollY) {
+      setIsVisible(false); // Scroll down
+    } else {
+      setIsVisible(true); // Scroll up
+    }
+    setLastScrollY(window.scrollY);
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownVisible((prev) => !prev); // Toggle the mobile menu
+  };
+
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsDropdownVisible(false); // Close the dropdown if clicking outside
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [lastScrollY]);
+
   return (
-    <div className="border-b-[1px] border-slate-800 bg-white px-5 py-2">
+    <header
+      className={`${!isVisible ? "-translate-y-full" : "translate-y-0"} fixed z-50 w-full border-b-[1px] border-slate-800 bg-white px-5 py-2 transition-all duration-300 ease-out`}
+    >
       <div className="grid grid-cols-12">
         <div className="col-span-2 flex items-center justify-center">
           <Link href="/" className="text-lg font-semibold">
@@ -99,7 +135,7 @@ const Header = () => {
                 <Link className="text-lg" href={"/auth/signup"}>
                   Sign Up
                 </Link>
-                <div className="relative">
+                <div className="relative" ref={dropdownRef}>
                   <Link
                     className="flex items-center justify-center gap-3 text-lg"
                     href="/cart"
@@ -107,7 +143,7 @@ const Header = () => {
                     <IoCartOutline className="text-2xl" />
                     Cart
                     <span className="absolute -top-2 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
-                      10
+                      0
                     </span>
                   </Link>
                 </div>
@@ -116,7 +152,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
