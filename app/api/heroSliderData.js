@@ -9,7 +9,7 @@ export const sliderData = [
     price: 59.99,
     category: "Men's Fashion",
     image:
-      "https://images.unsplash.com/photo-1709691929274-fe7f982fde0e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://freedesignfile.com/upload/2017/02/Young-and-beautiful-fashion-woman-HD-picture-05.jpg",
   },
   {
     id: 2,

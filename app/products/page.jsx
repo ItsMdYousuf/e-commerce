@@ -14,7 +14,6 @@ const Products = () => {
       const products = await productsLoad();
       setData(products);
       setLoading(false);
-      console.log(products);
     };
 
     fetchData();

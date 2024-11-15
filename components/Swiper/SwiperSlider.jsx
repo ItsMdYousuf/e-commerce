@@ -1,5 +1,3 @@
-"use client";
-
 import { sliderData } from "@/app/api/heroSliderData";
 import "swiper/css"; // Import Swiper core CSS
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,7 +7,6 @@ import "./swiper.css";
 
 const SwiperSlider = () => {
   const data = sliderData;
-  // console.log(data);
 
   return (
     <div>
@@ -20,15 +17,12 @@ const SwiperSlider = () => {
         loop={true} // Infinite loop
         pagination={{ clickable: true }} // Enable pagination if needed
         navigation={true} // Enable navigation if needed
-        autoplay={true}
+        autoplay={{
+          delay: 1000, // Time between slides in ms
+          disableOnInteraction: false, // Keep autoplay running after user interaction
+        }}
       >
-        {/* <HeroSlider
-            title="Autumn Fashion for Man"
-            subTitle="New Product"
-            productStatus="On Trending"
-            img='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTB8fGZhc2hpb258ZW58MHx8MHx8fDA%3D'
-            /> */}
-        {sliderData.map((item, index) => (
+        {sliderData.map((item) => (
           <SwiperSlide key={item.id} className="slider__height">
             <HeroSlider
               title={item.title}
@@ -38,8 +32,6 @@ const SwiperSlider = () => {
             />
           </SwiperSlide>
         ))}
-
-        {/* Add more slides as needed */}
       </Swiper>
       <MiniCollection />
     </div>

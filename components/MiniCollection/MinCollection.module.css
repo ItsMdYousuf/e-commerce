@@ -1,0 +1,28 @@
+.img__fill {
+  width: 100%;
+  height: 100%;
+}
+
+.product_content {
+  position: relative;
+  overflow: hidden;
+}
+
+.product_content::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 150px;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+  transform: translateY(150px);
+
+  transition: transform 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.product_content:hover::after {
+  @apply translate-y-0 bg-gradient-to-t from-purple-500;
+}
