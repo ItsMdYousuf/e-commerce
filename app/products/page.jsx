@@ -9,12 +9,17 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch data using productsLoad
   useEffect(() => {
     const fetchData = async () => {
-      const products = await productsLoad();
-      setData(products);
-
-      setLoading(false);
+      try {
+        const products = await productsLoad();
+        setData(products);
+      } catch (error) {
+        console.error("Failed to load products:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -24,8 +29,9 @@ const Products = () => {
     <div className="container px-10 pb-10">
       <Title titleName="Products" />
       <div className="grid grid-cols-1 items-center gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {loading == true && <h2 className="text-center"> loading...</h2>}
-        {data.map((item) => (
+        {loading && <h2 className="text-center">Loading...</h2>}
+        {!loading && data.length === 0 && <h2 className="text-center">No products found.</h2>}
+        {data?.map((item) => (
           <ProductItem item={item} key={item.id} />
         ))}
       </div>
