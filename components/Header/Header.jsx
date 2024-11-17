@@ -7,7 +7,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
 
 // Assuming productsApi is an API function to fetch products
-import { productsApi } from "@/app/api/productsData";
+// import { productsApi } from "@/app/api/productsData";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -19,12 +19,12 @@ const Header = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for dropdown visibility
   const dropdownRef = useRef(null); // Add dropdownRef here
 
-  // Fetch the products from the API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await productsApi(); // Assuming this is a function to fetch data
-        setAllProducts(response); // Store fetched data in the state
+        const response = await fetch('https://dummyjson.com/products');
+        const result = await response.json();
+        setAllProducts(result.products); // Use 'result.products' which is an array
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -32,19 +32,20 @@ const Header = () => {
     fetchProducts();
   }, []);
 
-  // Handle product search
   const handleSearchProduct = (e) => {
-    const query = e.target.value.toLowerCase(); // Ensure consistent case for comparison
+    const query = e.target.value.toLowerCase();
     setSearchProduct(query);
 
-    // Filter products based on the search query
+    // Ensure allProducts is an array before filtering
     const results = query
-      ? allProducts.filter((product) =>
-          product.title.toLowerCase().includes(query),
-        )
-      : allProducts; // Display all products if search bar is empty
+      ? allProducts?.filter((product) =>
+        product.title.toLowerCase().includes(query)
+      )
+      : allProducts;
+
     setFilteredProducts(results);
   };
+
 
   // Header Scroll
   const handleScroll = () => {
@@ -89,9 +90,8 @@ const Header = () => {
         <div className="relative col-span-6 flex items-center justify-end">
           {/* Search Filter */}
           <input
-            className={`${Styles.header__input} ${
-              isInputFocused ? "w-[300px]" : "w-[200px]"
-            }`}
+            className={`${Styles.header__input} ${isInputFocused ? "w-[300px]" : "w-[200px]"
+              }`}
             type="text"
             placeholder="Search product"
             value={searchProduct}

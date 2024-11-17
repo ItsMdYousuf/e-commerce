@@ -13,8 +13,9 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const products = await productsLoad();
-        setData(products);
+        const response = await fetch('https://dummyjson.com/products/category/mobile-accessories');
+        const result = await response.json();
+        setData(result.products); // Use result.products as it's an array
       } catch (error) {
         console.error("Failed to load products:", error);
       } finally {
@@ -31,7 +32,7 @@ const Products = () => {
       <div className="grid grid-cols-1 items-center gap-5 md:grid-cols-2 lg:grid-cols-4">
         {loading && <h2 className="text-center">Loading...</h2>}
         {!loading && data.length === 0 && <h2 className="text-center">No products found.</h2>}
-        {data?.map((item) => (
+        {data.map((item) => (
           <ProductItem item={item} key={item.id} />
         ))}
       </div>
