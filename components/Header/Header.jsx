@@ -7,7 +7,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
 
 // Assuming productsApi is an API function to fetch products
-// import { productsApi } from "@/app/api/productsData";
+import { productsApi } from "@/app/api/productsData";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -18,7 +18,9 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for dropdown visibility
   const dropdownRef = useRef(null); // Add dropdownRef here
+  const [isCartActive, setIsCartActive] = useState(false);
 
+  // Fetch the products from the API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -121,7 +123,7 @@ const Header = () => {
         </div>
         <div className="col-span-4">
           <div className="flex justify-between">
-            <div className="flex w-full items-center justify-between pl-4">
+            <div className="flex w-full flex-row-reverse items-center justify-between pl-4">
               <div>
                 <div className={`${Styles.flex__Center} gap-5 text-xs`}>
                   <RiCustomerService2Line className="text-4xl" />
@@ -136,16 +138,18 @@ const Header = () => {
                   Sign Up
                 </Link>
                 <div className="relative" ref={dropdownRef}>
-                  <Link
+                  <button
                     className="flex items-center justify-center gap-3 text-lg"
-                    href="/cart"
+                    onClick={toggleCartActive}
                   >
                     <IoCartOutline className="text-2xl" />
                     Cart
                     <span className="absolute -top-2 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
                       0
                     </span>
-                  </Link>
+                  </button>
+
+                  {isCartActive ? <CartItem /> : null}
                 </div>
               </div>
             </div>
