@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoCartOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
@@ -9,6 +9,7 @@ import Styles from "./Header.module.css";
 // Assuming productsApi is an API function to fetch products
 import { productsApi } from "@/app/api/productsData";
 import CartItem from "@/app/cart/cartItem";
+import { AddToCart } from "@/app/context/AddToCart";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -20,6 +21,7 @@ const Header = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for dropdown visibility
   const dropdownRef = useRef(null); // Add dropdownRef here
   const [isCartActive, setIsCartActive] = useState(false);
+  const { cartItems } = useContext(AddToCart);
 
   const toggleCartActive = () => {
     setIsCartActive(!isCartActive);
@@ -148,7 +150,7 @@ const Header = () => {
                     <IoCartOutline className="text-2xl" />
                     Cart
                     <span className="absolute -top-2 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
-                      0
+                      {cartItems.length}
                     </span>
                   </button>
 

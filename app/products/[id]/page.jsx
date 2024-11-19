@@ -1,16 +1,17 @@
 "use client";
 import { AddToCart } from "@/app/context/AddToCart";
+import Button from "@/components/Buttons/Button";
 import Title from "@/components/Title";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-const ProductsDetails = () => {
+const ProductsDetails = ({ singleProduct }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [mainImage, setMainImage] = useState(""); // Main image state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { handleAddedCart } = useContext(AddToCart);
+  const { addToCart } = useContext(AddToCart);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +31,6 @@ const ProductsDetails = () => {
 
     fetchData();
   }, [id]);
-
-  console.log(product);
 
   if (loading) {
     return (
@@ -85,7 +84,6 @@ const ProductsDetails = () => {
                       <img
                         className="h-24 w-24 object-contain"
                         src={imageItem}
-                        alt=""
                       />
                     </div>
                   ))
@@ -109,12 +107,10 @@ const ProductsDetails = () => {
               </div>
 
               <div className="mb-6 flex space-x-4">
-                <button
-                  onClick={() => handleAddedCart(product)}
-                  className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                >
-                  Add to Cart
-                </button>
+                <Button
+                  onClick={() => addToCart(singleProduct)} // Pass product details
+                  children="Add to Cart"
+                />
                 <button className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400">
                   Wishlist
                 </button>
