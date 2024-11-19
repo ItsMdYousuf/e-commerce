@@ -7,7 +7,6 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
 
 // Assuming productsApi is an API function to fetch products
-import { productsApi } from "@/app/api/productsData";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -24,7 +23,7 @@ const Header = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://dummyjson.com/products');
+        const response = await fetch("https://dummyjson.com/products");
         const result = await response.json();
         setAllProducts(result.products); // Use 'result.products' which is an array
       } catch (error) {
@@ -41,13 +40,12 @@ const Header = () => {
     // Ensure allProducts is an array before filtering
     const results = query
       ? allProducts?.filter((product) =>
-        product.title.toLowerCase().includes(query)
-      )
+          product.title.toLowerCase().includes(query),
+        )
       : allProducts;
 
     setFilteredProducts(results);
   };
-
 
   // Header Scroll
   const handleScroll = () => {
@@ -92,8 +90,9 @@ const Header = () => {
         <div className="relative col-span-6 flex items-center justify-end">
           {/* Search Filter */}
           <input
-            className={`${Styles.header__input} ${isInputFocused ? "w-[300px]" : "w-[200px]"
-              }`}
+            className={`${Styles.header__input} ${
+              isInputFocused ? "w-[300px]" : "w-[200px]"
+            }`}
             type="text"
             placeholder="Search product"
             value={searchProduct}
@@ -138,10 +137,7 @@ const Header = () => {
                   Sign Up
                 </Link>
                 <div className="relative" ref={dropdownRef}>
-                  <button
-                    className="flex items-center justify-center gap-3 text-lg"
-                    onClick={toggleCartActive}
-                  >
+                  <button className="flex items-center justify-center gap-3 text-lg">
                     <IoCartOutline className="text-2xl" />
                     Cart
                     <span className="absolute -top-2 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
