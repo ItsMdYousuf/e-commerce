@@ -5,4 +5,4 @@ export async function productsLoad() {
   const data = await res.json();
   return data.products;
 }
-// console.log(productsLoad);
+console.log(productsLoad);

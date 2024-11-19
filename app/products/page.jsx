@@ -15,6 +15,19 @@ const Products = () => {
       console.log(products);
 
       setLoading(false);
+ 
+
+      try {
+        const response = await fetch('https://dummyjson.com/products/category/mobile-accessories');
+        const result = await response.json();
+        setData(result.products); // Use result.products as it's an array
+      } catch (error) {
+        console.error("Failed to load products:", error);
+      } finally {
+        setLoading(false);
+      }
+
+ 
     };
 
     fetchData();
@@ -23,10 +36,12 @@ const Products = () => {
   return (
     <div className="container px-10 pb-10">
       <Title titleName="Products" />
+ 
       <Filter />
       <div className="grid grid-cols-1 items-center gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading == true && <h2 className="text-center"> loading...</h2>}
         {data.map((item) => (
+ 
           <ProductItem item={item} key={item.id} />
         ))}
       </div>
