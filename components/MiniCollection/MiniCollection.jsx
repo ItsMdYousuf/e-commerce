@@ -21,6 +21,7 @@ const MiniCollection = () => {
             width={1000}
             className={`${Styles.img__fill} object-cover`}
             height={1000}
+            alt=""
           />
         </div>
         <div
@@ -33,6 +34,8 @@ const MiniCollection = () => {
             width={300}
             className={`${Styles.img__fill}`}
             height={200}
+            alt=""
+
           />
         </div>
         <div
@@ -48,6 +51,8 @@ const MiniCollection = () => {
             width={300}
             className={`${Styles.img__fill}`}
             height={300}
+            alt=""
+
           />
         </div>
         <div
@@ -60,6 +65,8 @@ const MiniCollection = () => {
             width={500}
             className={`${Styles.img__fill} object-cover`}
             height={1500}
+            alt=""
+
           />
         </div>
       </div>
