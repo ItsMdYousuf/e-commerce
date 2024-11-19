@@ -6,7 +6,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import Button from "../../components/Buttons/Button";
 import { AddToCart } from "../context/AddToCart";
 
-const ProductItem = ({ item }) => {
+const ProductItem = ({ singleProduct }) => {
   const { addToCart } = useContext(AddToCart); // Get addToCart from context
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
@@ -39,7 +39,7 @@ const ProductItem = ({ item }) => {
           New
         </span>
         <img
-          src={item.thumbnail}
+          src={singleProduct.thumbnail}
           alt="product pic"
           className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
         />
@@ -52,21 +52,23 @@ const ProductItem = ({ item }) => {
           <GoHeart className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white" />
         </div>
         <Button
-          onClick={() => addToCart(item)} // Add item to cart
           children="Shop Now"
           className="absolute bottom-2 -z-10 translate-y-8 opacity-0 shadow-none transition-all duration-300 ease-in-out group-hover:z-10 group-hover:translate-y-0 group-hover:opacity-100"
         />
       </div>
       <div className="border-t-2 p-2">
         <h4 className="text-lg font-semibold">
-          <Link className="hover:underline" href={`/products/${item.id}`}>
-            {item.title}
+          <Link
+            className="hover:underline"
+            href={`/products/${singleProduct.id}`}
+          >
+            {singleProduct.title}
           </Link>
         </h4>
         <div className="flex justify-between">
-          <p className="text-lg">${item.price}</p>
+          <p className="text-lg">${singleProduct.price}</p>
           <p>
-            Review: ({item.reviews.length}) {item.rating}
+            Review: ({singleProduct.reviews.length}) {singleProduct.rating}
           </p>
         </div>
       </div>
@@ -83,19 +85,23 @@ const ProductItem = ({ item }) => {
             >
               ×
             </button>
-            <img src={item.thumbnail} alt="product" className="mb-4" />
+            <img
+              src={singleProduct.thumbnail}
+              alt={singleProduct.title}
+              className="mb-4"
+            />
             <div className="">
               <Link
                 className="mb-2 text-2xl font-semibold"
-                href={`/products/${item.id}`}
+                href={`/products/${singleProduct.id}`}
               >
-                {item.title}
+                {singleProduct.title}
               </Link>
-              <p className="text-gray-700">{item.description}</p>
+              <p className="text-gray-700">{singleProduct.description}</p>
               <div className="flex w-full items-center justify-center gap-5">
-                <p className="mt-4 text-lg font-bold">${item.price}</p>
+                <p className="mt-4 text-lg font-bold">${singleProduct.price}</p>
                 <Button
-                  onClick={() => addToCart(item)}
+                  onClick={() => addToCart(singleProduct)} // Pass product details
                   children="Add to Cart"
                 />
               </div>

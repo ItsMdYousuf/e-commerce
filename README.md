@@ -1,37 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-Commerce Application
 
-## Getting Started
+This is a modern MERN Stack e-commerce website.
 
-First, run the development server:
+# Download project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Download this project
+
+```
+git clone https://github.com/yousufislamme/e-commerce.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Run code
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+For NPM.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+npm run dev
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+FOR Yarn
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+yarn run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Create a `Brunch`
 
-## Deploy on Vercel
+create a `brunch` as your need,
+for example
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+git checkout -b dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# e-commerce
+## Brunch Switch main to dev
+
+If you want to switch branch you must need commit your current brunch's code then run below command.
+
+```
+git checkout dev
+```
+
+# Live website url
+
+application [Live](https://e-commerce-zeta-wine.vercel.app)
+
+# Back-End Server
+
+[Server Link](https://github.com/yousufislamme/e-commerce-server)
+[Server Live](https://e-commerce-server-pink.vercel.app/)
