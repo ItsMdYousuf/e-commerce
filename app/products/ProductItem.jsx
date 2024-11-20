@@ -21,14 +21,21 @@ const ProductItem = ({ singleProduct }) => {
       }
     };
 
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
     if (showModal) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+      modalRef.current?.focus(); // Focus the modal when opened
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [showModal]);
 
@@ -40,20 +47,26 @@ const ProductItem = ({ singleProduct }) => {
         </span>
         <img
           src={singleProduct.thumbnail}
-          alt="product pic"
+          alt={singleProduct.title}
           className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+          onError={(e) => (e.target.src = "/fallback-image.jpg")}
         />
 
         <div className="absolute right-3 top-3 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
           <IoEyeOutline
             className="h-8 w-8 cursor-pointer rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
             onClick={openModal}
+            aria-label="View Details"
           />
-          <GoHeart className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white" />
+          <GoHeart
+            className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
+            aria-label="Add to Wishlist"
+          />
         </div>
         <Button
           children="Shop Now"
           className="absolute bottom-2 -z-10 translate-y-8 opacity-0 shadow-none transition-all duration-300 ease-in-out group-hover:z-10 group-hover:translate-y-0 group-hover:opacity-100"
+          aria-hidden={!showModal}
         />
       </div>
       <div className="border-t-2 p-2">
@@ -74,14 +87,20 @@ const ProductItem = ({ singleProduct }) => {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          aria-modal="true"
+          role="dialog"
+        >
           <div
             ref={modalRef}
-            className="relative w-96 rounded-md bg-white p-6 shadow-lg"
+            className="relative w-96 rounded-md bg-white p-6 shadow-lg focus:outline-none"
+            tabIndex={-1}
           >
             <button
               className="absolute right-2 top-2 text-xl text-gray-600 hover:text-gray-800"
               onClick={closeModal}
+              aria-label="Close"
             >
               ×
             </button>
@@ -89,8 +108,9 @@ const ProductItem = ({ singleProduct }) => {
               src={singleProduct.thumbnail}
               alt={singleProduct.title}
               className="mb-4"
+              onError={(e) => (e.target.src = "/fallback-image.jpg")}
             />
-            <div className="">
+            <div className="mt-4">
               <Link
                 className="mb-2 text-2xl font-semibold"
                 href={`/products/${singleProduct.id}`}

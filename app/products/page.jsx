@@ -2,6 +2,8 @@
 
 import Filter from "@/components/Filter";
 import Title from "@/components/Title";
+import { useEffect, useState } from "react";
+import { productsLoad } from "../api/productsData";
 import ProductItem from "./ProductItem";
 
 const Products = () => {
@@ -27,7 +29,7 @@ const Products = () => {
       <div className="grid grid-cols-1 items-center gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading == true && <h2 className="text-center"> loading...</h2>}
         {data.map((item) => (
-          <ProductItem item={item} key={item.id} />
+          <ProductItem singleProduct={item} key={item.id} />
         ))}
       </div>
     </div>
