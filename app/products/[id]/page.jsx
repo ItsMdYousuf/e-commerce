@@ -21,8 +21,14 @@ const ProductsDetails = ({ singleProduct }) => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
+        console.log(result); // Check the API response
         setProduct(result);
-        setMainImage(result.thumbnail);
+
+        // Set the main image to the first image or thumbnail
+        setMainImage(
+          result?.images?.[0] || result.thumbnail || "/fallback-image.jpg",
+        );
+
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -44,20 +50,20 @@ const ProductsDetails = ({ singleProduct }) => {
     return <p>Error: {error.message}</p>;
   }
   const {
-    images,
-    title,
-    price,
-    discountPercentage,
-    description,
-    thumbnail,
-    rating,
-    brand,
-    tags,
-    warrantyInformation,
-    returnPolicy,
-    shippingInformation,
-    reviews,
-    availabilityStatus,
+    images = [],
+    title = "Unknown Title",
+    price = 0,
+    discountPercentage = 0,
+    description = "No description available.",
+    thumbnail = "/fallback-image.jpg", // Default image
+    rating = 0,
+    brand = "Unknown Brand",
+    tags = [],
+    warrantyInformation = "No warranty information.",
+    returnPolicy = "No return policy.",
+    shippingInformation = "No shipping information.",
+    reviews = [],
+    availabilityStatus = "Unavailable",
   } = product;
 
   return (
@@ -68,26 +74,23 @@ const ProductsDetails = ({ singleProduct }) => {
           <div className="flex-1">
             <div className="w-full p-6">
               <img
-                src={mainImage} // Main image changes here
+                src={mainImage || "/fallback-image.jpg"} // Use mainImage or fallback
                 alt={title}
                 className="h-60 w-full rounded-lg object-contain lg:h-96"
               />
             </div>
             <div className="mx-auto mt-6 flex justify-center gap-6">
-              {images?.length
-                ? images.map((imageItem, index) => (
-                    <div
-                      key={index}
-                      className="cursor-pointer p-2 shadow-md"
-                      onClick={() => setMainImage(imageItem)} // Clicking the thumbnail changes the main image
-                    >
-                      <img
-                        className="h-24 w-24 object-contain"
-                        src={imageItem}
-                      />
-                    </div>
-                  ))
-                : null}
+              <div className="mx-auto mt-6 flex justify-center gap-2">
+                {images.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img || "/fallback-image.jpg"} // Use fallback for invalid images
+                    alt={`${title} - ${index + 1}`}
+                    className="h-16 w-16 cursor-pointer rounded-lg object-cover"
+                    onClick={() => setMainImage(img)} // Update main image on click
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
