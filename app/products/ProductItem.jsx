@@ -1,18 +1,36 @@
 "use client";
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
 import { IoEyeOutline } from "react-icons/io5";
 import Button from "../../components/Buttons/Button";
 import { AddToCart } from "../context/AddToCart";
+import { DataFetchContext } from "../context/DataFetchContext";
 
 const ProductItem = ({ singleProduct }) => {
   const { addToCart } = useContext(AddToCart); // Get addToCart from context
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
-
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const { Products } = useContext(DataFetchContext);
+  const {
+    images = [],
+    title = "Unknown Title",
+    price = 0,
+    discountPercentage = 0,
+    description = "No description available.",
+    thumbnail = "/fallback-image.jpg", // Default image
+    rating = 0,
+    brand = "Unknown Brand",
+    tags = [],
+    warrantyInformation = "No warranty information.",
+    returnPolicy = "No return policy.",
+    shippingInformation = "No shipping information.",
+    reviews = [],
+    availabilityStatus = "Unavailable",
+  } = Products;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -78,11 +96,23 @@ const ProductItem = ({ singleProduct }) => {
             {singleProduct.title}
           </Link>
         </h4>
-        <div className="flex justify-between">
-          <p className="text-lg">${singleProduct.price}</p>
-          <p>
-            Review: ({singleProduct.reviews.length}) {singleProduct.rating}
-          </p>
+        <div className="flex flex-col justify-between">
+          <div>
+            <p className="text-lg">${singleProduct.price}</p>
+          </div>
+          <div className="flex items-center">
+            {/* Display stars based on the average rating of the product */}
+            {Array.from({ length: 5 }, (_, i) => (
+              <FaStar
+                key={i}
+                className={`text-${i < Math.round(singleProduct.rating) ? "yellow-500" : "gray-300"}`}
+                size={20}
+              />
+            ))}
+            <p>
+              Review: ({singleProduct.reviews.length}) {singleProduct.rating}
+            </p>
+          </div>
         </div>
       </div>
 
