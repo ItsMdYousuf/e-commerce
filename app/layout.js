@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 import { DataFetchProvider } from "./context/DataFetchContext";
 import { AddToCartProvider } from "./context/AddToCart";
+import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,8 +45,14 @@ export default function RootLayout({ children }) {
             <AddToCartProvider>
               <Header />
               <div className="selection:bg-pink-300 pt-[4rem] selection:text-white">
-                {children}
+                <div className="relative">
+                  {children}
+                  <div className="absolute bottom-2 right-5">
+                    <ScrollToTop />
+                  </div>
+                </div>
               </div>
+
               <Footer />
             </AddToCartProvider>
           </DataFetchProvider>
