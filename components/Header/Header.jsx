@@ -7,7 +7,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import Styles from "./Header.module.css";
 
 import CartItem from "@/app/cart/cartItem";
-import { AddToCart } from "@/app/context/AddToCart";
+import { Context } from "@/app/context/AddToCart";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -18,7 +18,7 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
-  const { cartItems } = useContext(AddToCart);
+  const { addCarts } = useContext(Context);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +32,7 @@ const Header = () => {
     };
     fetchProducts();
   }, []);
+  const totalProductsLength = addCarts.length;
 
   const handleSearchProduct = (e) => {
     const query = e.target.value.toLowerCase();
@@ -136,7 +137,7 @@ const Header = () => {
                     <IoCartOutline className="text-2xl" />
                     Cart
                     <span className="absolute -top-2 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
-                      {cartItems.length}
+                      {totalProductsLength}
                     </span>
                   </button>
 

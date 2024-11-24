@@ -1,0 +1,13 @@
+1. Extract `products` from the response:
+   Replace `setData(Data)` with `setData(Data.products || []).`
+
+2. Handle `loading` state properly:
+   Use `setLoading(false)` after fetching is complete or in the `catch` block if an error occurs.
+
+3. Error handling:
+   Added a `catch` block to set `data` to an empty array if fetching fails.
+
+4. Fixed typo in "No products available":
+   Corrected the typo in the message.
+
+5. Now, the `data.map` call will work correctly because `data` is guaranteed to be an array.
