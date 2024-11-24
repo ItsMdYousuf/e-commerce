@@ -8,7 +8,7 @@ import Button from "../../components/Buttons/Button";
 import { Context } from "../context/AddToCart";
 
 const ProductItem = ({ singleProduct }) => {
-  const { addToCart } = useContext(Context); // Get addToCart from context
+  const { addToCart, handleAddToCart } = useContext(Context); // Get addToCart from context
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
@@ -29,7 +29,7 @@ const ProductItem = ({ singleProduct }) => {
 
   return (
     <div className="group overflow-hidden border-2 bg-gray-100">
-      <div className="relative flex flex-col items-center justify-center pb-2">
+      <div className="group relative flex flex-col items-center justify-center overflow-hidden pb-2">
         <img
           src={thumbnail}
           alt={title}
@@ -48,12 +48,12 @@ const ProductItem = ({ singleProduct }) => {
             aria-label="Add to Wishlist"
           />
         </div>
-        <Link href={`/products/${id}`}>
-          <Button
-            children="Shop Now"
-            className="absolute bottom-2 -z-10 translate-y-8 opacity-0 shadow-none transition-all duration-300 ease-in-out group-hover:z-10 group-hover:translate-y-0 group-hover:opacity-100"
-          />
-        </Link>
+        <button
+          className="translate-y-14 bg-black px-5 py-2 capitalize text-white transition-all duration-150 ease-out group-hover:translate-y-0"
+          onClick={() => handleAddToCart(singleProduct)}
+        >
+          Add to cart
+        </button>
       </div>
       <div className="border-t-2 p-2">
         <h4 className="text-lg font-semibold">
@@ -105,7 +105,7 @@ const ProductItem = ({ singleProduct }) => {
             <p className="mt-2 text-gray-700">{description}</p>
             <p className="mt-4 text-lg font-bold">${price}</p>
             <Button
-              onClick={() => addToCart(singleProduct)}
+              onClick={() => handleAddToCart(singleProduct)}
               children="Add to Cart"
             />
           </div>

@@ -1,0 +1,28 @@
+/* Scrollbar styles */
+.cartContainer {
+  max-height: 360px;
+  width: 18rem; /* 72px in rem */
+  overflow-y: scroll;
+  border-radius: 0.5rem; /* Rounded corners */
+  background-color: white;
+  padding: 1rem; /* 4px in rem */
+}
+
+/* Customize the scrollbar */
+.cartContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cartContainer::-webkit-scrollbar-track {
+  background: #f3f4f6; /* Light gray */
+  border-radius: 10px;
+}
+
+.cartContainer::-webkit-scrollbar-thumb {
+  background: #9ca3af; /* Darker gray */
+  border-radius: 10px;
+}
+
+.cartContainer::-webkit-scrollbar-thumb:hover {
+  background: #6b7280; /* Even darker gray on hover */
+}

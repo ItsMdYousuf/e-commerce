@@ -24,7 +24,6 @@ function GlobalState({ children }) {
 
    // remove from cart product item
    function handleRemoveFromCart(getCurrentItem) {
-      console.log(copyProducts);
       let copyProducts = [...addCarts]
       copyProducts = copyProducts.filter(productItem => productItem.id != getCurrentItem)
       setAddCarts(copyProducts);
