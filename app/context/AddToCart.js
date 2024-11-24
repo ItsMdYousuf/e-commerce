@@ -1,34 +1,45 @@
 "use client";
-import { createContext, useState } from "react";
 
-export const AddToCart = createContext();
+const { createContext, useState, useEffect } = require("react");
 
-export const AddToCartProvider = ({ children }) => {
-   const [cartItems, setCartItems] = useState([]);
+export const Context = createContext(null);
 
-   const addToCart = (product) => {
-      setCartItems((prevItems) => {
-         const isProductInCart = prevItems.find(
-            (item) => item.id === product.id
-         );
 
-         if (isProductInCart) {
-            // If the product is already in the cart, increment quantity
-            return prevItems.map((item) =>
-               item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-            );
-         }
+function GlobalState({ children }) {
+   const [addCarts, setAddCarts] = useState([]);
 
-         // Add new product to the cart
-         return [...prevItems, { ...product, quantity: 1 }];
-      });
-   };
+   // add to cart product item
+   function handleAddToCart(getCurrentItem) {
+      let copyProducts = [...addCarts];
+      const indexOfCurrentItem = copyProducts.findIndex(productItem => productItem.id === getCurrentItem.id);
+
+      console.log(indexOfCurrentItem);
+
+      if (indexOfCurrentItem === -1) {
+         copyProducts.push(getCurrentItem);
+      }
+
+      setAddCarts(copyProducts);
+   }
+
+   // remove from cart product item
+   function handleRemoveFromCart(getCurrentItem) {
+      console.log(copyProducts);
+      let copyProducts = [...addCarts]
+      copyProducts = copyProducts.filter(productItem => productItem.id != getCurrentItem)
+      setAddCarts(copyProducts);
+      localStorage.setItem("addCarts", JSON.stringify(copyProducts));
+   }
+
+   useEffect(() => {
+      setAddCarts(JSON.parse(localStorage.getItem("addCart")) || [])
+   }, []);
 
    return (
-      <AddToCart.Provider value={{ cartItems, addToCart }}>
+      <Context.Provider value={{ addCarts, handleAddToCart, handleRemoveFromCart }}>
          {children}
-      </AddToCart.Provider>
-   );
-};
+      </Context.Provider>
+   )
+}
+
+export default GlobalState;

@@ -1,5 +1,5 @@
 "use client";
-import { AddToCart } from "@/app/context/AddToCart";
+import { Context } from "@/app/context/AddToCart";
 import Button from "@/components/Buttons/Button";
 import Title from "@/components/Title";
 import { useParams } from "next/navigation";
@@ -11,7 +11,7 @@ const ProductsDetails = ({ singleProduct }) => {
   const [mainImage, setMainImage] = useState(""); // Main image state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { addToCart } = useContext(AddToCart);
+  const { handleAddToCart } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,7 +111,7 @@ const ProductsDetails = ({ singleProduct }) => {
 
               <div className="mb-6 flex space-x-4">
                 <Button
-                  onClick={() => addToCart(singleProduct)} // Pass product details
+                  onClick={() => handleAddToCart(product)} // Pass product details
                   children="Add to Cart"
                 />
                 <button className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400">
