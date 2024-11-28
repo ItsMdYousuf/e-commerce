@@ -18,7 +18,7 @@ const Cart = () => {
           <ul className="flex flex-col divide-y dark:divide-gray-300">
             {
               addCarts.map((item => (
-                <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
+                <li key={item.id} className="flex flex-col py-6 sm:flex-row sm:justify-between">
                   <div className="flex w-full space-x-2 sm:space-x-4">
                     <img className="flex-shrink-0 object-cover w-20 h-20 dark:border- rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src={item.thumbnail}
                       alt={item.title}

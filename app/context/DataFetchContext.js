@@ -6,29 +6,30 @@ export const DataFetchContext = createContext();
 
 // Context provider component
 export function DataFetchProvider({ children }) {
-   const [Products, setProducts] = useState([]);
-   const [Loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]); // Lowercase variable naming convention
+  const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
-      const fetchProducts = async () => {
-         setLoading(true); // Set loading to true before fetching
-         try {
-            const response = await fetch("https://dummyjson.com/products");
-            const data = await response.json();
-            setProducts(data.products || []);
-         } catch (error) {
-            console.error("Error fetching products:", error);
-         } finally {
-            setLoading(false); // Set loading to false after fetching
-         }
-      };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true); // Ensure the loading state updates
+      try {
+        const response = await fetch("https://dummyjson.com/products");
+        const data = await response.json();
+        setProducts(data.products || []); // Update with fetched data
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]); // Handle error by resetting data
+      } finally {
+        setLoading(false); // Ensure loading completes
+      }
+    };
 
-      fetchProducts();
-   }, []);
+    fetchProducts();
+  }, []); // Dependency only on initial render
 
-   return (
-      <DataFetchContext.Provider value={{ Products, Loading }}>
-         {children}
-      </DataFetchContext.Provider>
-   );
+  return (
+    <DataFetchContext.Provider value={{ products, loading }}>
+      {children}
+    </DataFetchContext.Provider>
+  );
 }
