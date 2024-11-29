@@ -104,7 +104,7 @@ const Header = () => {
                     key={product.id}
                     className="cursor-pointer p-2 hover:bg-gray-100"
                   >
-                    <Link href={`/product/${product.id}`} className="text-sm">
+                    <Link href={`/products/${product.id}`} className="text-sm">
                       {product.title}
                     </Link>
                   </li>
