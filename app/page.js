@@ -1,5 +1,6 @@
 "use client";
 import Products from "@/app/products/page";
+import Code from "@/components/Code";
 import Slider from "@/components/Slider/Slider";
 
 export default function Home() {
