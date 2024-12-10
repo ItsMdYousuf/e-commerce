@@ -1,6 +1,7 @@
 "use client";
 import Products from "@/app/products/page";
 import Code from "@/components/Code";
+import Features from "@/components/Features";
 import Slider from "@/components/Slider/Slider";
 
 export default function Home() {
@@ -16,6 +17,8 @@ export default function Home() {
     <div>
       <Slider autoplayInterval="2000" images={images} />
       <Products />
+      <Features />
     </div>
+
   );
 }
