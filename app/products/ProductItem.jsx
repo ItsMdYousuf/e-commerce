@@ -85,7 +85,7 @@ const ProductItem = ({ singleProduct }) => {
         >
           <div
             ref={modalRef}
-            className="relative w-96 rounded-md bg-white p-6 shadow-lg"
+            className="relative m-5 w-96 rounded-md bg-white p-6 shadow-lg"
             tabIndex={-1}
           >
             <button

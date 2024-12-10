@@ -1,13 +1,13 @@
 "use client";
+import CartItem from "@/app/cart/cartItem";
+import { Context } from "@/app/context/AddToCart";
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoCartOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
+import { NavigationMenuDemo } from "../ui/menuDemo";
 import Styles from "./Header.module.css";
-
-import CartItem from "@/app/cart/cartItem";
-import { Context } from "@/app/context/AddToCart";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -83,6 +83,7 @@ const Header = () => {
           </Link>
         </div>
         <div className="relative col-span-6 flex items-center justify-end">
+          <NavigationMenuDemo />
           <input
             className={`${Styles.header__input} ${
               isInputFocused ? "w-[300px]" : "w-[200px]"

@@ -29,7 +29,7 @@ const Products = () => {
   };
 
   return (
-    <div className="container px-10 pb-10">
+    <div className="container mx-auto px-10 pb-10">
       <title>E-Commerce</title>
       <Title titleName="Products" />
 
