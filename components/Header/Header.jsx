@@ -9,6 +9,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import OfferAlert from "../OfferAlert/OfferAlert";
 import { NavigationMenuDemo } from "../ui/menuDemo";
 import Styles from "./Header.module.css";
+import MobileMenu from "./MobileMenu";
 
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -74,10 +75,11 @@ const Header = () => {
   return (
     <>
       <OfferAlert />
+      <MobileMenu />
       <header
         className={`${
           !isVisible ? "-translate-y-full" : "translate-y-0"
-        } fixed z-50 w-full border-b-[1px] border-slate-800 bg-white px-5 py-2 transition-all duration-300 ease-out`}
+        } fixed z-50 hidden w-full border-b-[1px] border-slate-800 bg-white px-5 py-2 transition-all duration-300 ease-out sm:block`}
       >
         <div className="grid grid-cols-12">
           <div className="col-span-2 flex items-center justify-center">

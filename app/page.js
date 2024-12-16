@@ -2,6 +2,7 @@
 import Products from "@/app/products/page";
 import Code from "@/components/Code";
 import Features from "@/components/Features";
+import OfferAds from "@/components/OfferAlert/OfferAds";
 import Slider from "@/components/Slider/Slider";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
     <div>
       <Slider autoplayInterval="2000" images={images} />
       <Products />
+      <OfferAds />
       <Features />
     </div>
 
