@@ -1,11 +1,12 @@
 "use client";
-import { Context } from "@/app/context/AddToCart";
-import Button from "@/components/Buttons/Button";
-import Title from "@/components/Title";
-import { AnimatePresence, motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { Context } from "@/app/context/AddToCart";
+import Button from "@/components/Buttons/Button";
+import Title from "@/components/Title";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Variants for container and items
 const containerVariants = {
@@ -28,66 +29,58 @@ const itemVariants = {
 const ProductsDetails = ({ singleProduct }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
-  const [mainImage, setMainImage] = useState(""); // Main image state
+  const [mainImage, setMainImage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const { handleAddToCart } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`https://dummyjson.com/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        if (!response.ok) throw new Error("Network response was not ok");
         const result = await response.json();
         setProduct(result);
+        setMainImage(result?.images?.[0] || result.thumbnail || "/fallback-image.jpg");
 
-        // Set the main image to the first image or thumbnail
-        setMainImage(
-          result?.images?.[0] || result.thumbnail || "/fallback-image.jpg",
+        const relatedResponse = await fetch(
+          `https://dummyjson.com/products/category/${result.category}`
         );
+        if (!relatedResponse.ok) throw new Error("Failed to fetch related products");
+        const relatedResult = await relatedResponse.json();
+        setRelatedProducts(relatedResult.products.filter((p) => p.id !== result.id));
+
         setLoading(false);
       } catch (error) {
         setError(error);
+        setLoading(false);
       }
     };
-
     fetchData();
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center p-16">
-        <div className="h-16 w-16 animate-spin rounded-full border-4 border-dashed dark:border-violet-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  if (loading)
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  if (error) return <p className="text-red-500">Error: {error.message}</p>;
 
   const {
     images = [],
-    title = "Unknown Title",
-    price = 0,
-    discountPercentage = 0,
-    description = "No description available.",
-    thumbnail = "/fallback-image.jpg", // Default image
-    rating = 0,
-    brand = "Unknown Brand",
-    tags = [],
-    warrantyInformation = "No warranty information.",
-    returnPolicy = "No return policy.",
-    shippingInformation = "No shipping information.",
+    title,
+    price,
+    discountPercentage,
+    description,
+    brand,
+    availabilityStatus,
+    warrantyInformation,
+    shippingInformation,
+    returnPolicy,
     reviews = [],
-    availabilityStatus = "Unavailable",
   } = product;
 
   return (
     <motion.div
-      className="px-4"
+      className="px-16"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -101,7 +94,7 @@ const ProductsDetails = ({ singleProduct }) => {
           <motion.div className="flex-1" variants={itemVariants}>
             <div className="w-full p-6">
               <motion.img
-                src={mainImage || "/fallback-image.jpg"} // Use mainImage or fallback
+                src={mainImage || "/fallback-image.jpg"}
                 alt={title}
                 className="h-60 w-full rounded-lg object-contain lg:h-96"
                 initial={{ opacity: 0 }}
@@ -131,20 +124,14 @@ const ProductsDetails = ({ singleProduct }) => {
             <div>
               <h1 className="mb-4 text-3xl font-bold">{title}</h1>
               <p className="mb-4 text-gray-600">{description}</p>
-
               <div className="mb-4 flex items-center">
-                <span className="text-2xl font-bold text-gray-900">
-                  ${price}
-                </span>
+                <span className="text-2xl font-bold text-gray-900">${price}</span>
                 <span className="ml-4 text-sm text-gray-500 line-through">
                   ${(price + price * (discountPercentage / 100)).toFixed(2)}
                 </span>
               </div>
-
               <div className="mb-6 flex space-x-4">
-                <Button onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </Button>
+                <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
                 <button className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400">
                   Wishlist
                 </button>
@@ -225,6 +212,35 @@ const ProductsDetails = ({ singleProduct }) => {
             ))}
           </AnimatePresence>
         </motion.section>
+
+        {/* Related Products Section */}
+        <section className="mt-12 py-8">
+          <Title titleName="Related Products" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-6">
+            {relatedProducts.map((related) => (
+              <div
+                key={related.id}
+                className="border rounded-lg p-4 shadow hover:shadow-lg transition"
+              >
+                <img
+                  src={related.thumbnail || "/fallback-image.jpg"}
+                  alt={related.title}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <Link
+                  href={`/products/${related.id}`}
+                  className="mt-4 text-lg font-semibold hover:underline"
+                >
+                  {related.title}
+                </Link>
+                <p className="text-gray-700 mt-2">${related.price.toFixed(2)}</p>
+                <Button onClick={() => handleAddToCart(related)} className="mt-4">
+                  Add to Cart
+                </Button>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </motion.div>
   );
