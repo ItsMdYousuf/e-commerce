@@ -1,29 +1,28 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import "./Slider.css"; // Updated CSS
+import "./Slider.css";
 
-const Slider = ({ images, autoplayInterval = 3000 }) => {
+const Slider = ({ images, autoplayInterval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
   // Autoplay functionality
   useEffect(() => {
-    const autoplay = !isHovered
-      ? setInterval(goToNext, autoplayInterval)
-      : null;
-
+    let autoplay;
+    if (!isHovered) {
+      autoplay = setInterval(goToNext, autoplayInterval);
+    }
     return () => {
       if (autoplay) clearInterval(autoplay);
     };
-  }, [isHovered, autoplayInterval]);
+  }, [isHovered, autoplayInterval, currentIndex]);
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
-    );
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const goToSlide = (index) => {
@@ -32,39 +31,33 @@ const Slider = ({ images, autoplayInterval = 3000 }) => {
 
   return (
     <div
-      className="slider-container"
+      className="slider-container m-5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <button className="slider-button prev" onClick={goToPrev}>
-        ❮
-      </button>
-      <div
+      <motion.div
         className="slider-wrapper"
-        style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
-        }}
+        animate={{ x: `-${currentIndex * 100}%` }}
+        transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
       >
         {images.map((image, index) => (
-          <div key={index} className="slider-slide">
+          <div key={index} className="slider-slide" style={{ width: "100%" }}>
             <img
-              className="slider-image"
-              src={image}
+              src={`https://ecommerce-backend-sand-eight.vercel.app${image}`}
               alt={`Slide ${index + 1}`}
+              className="slider-image"
             />
           </div>
         ))}
-      </div>
-      <button className="slider-button next" onClick={goToNext}>
-        ❯
-      </button>
+      </motion.div>
+
       <div className="slider-dots">
         {images.map((_, index) => (
-          <span
+          <button
             key={index}
             className={`dot ${index === currentIndex ? "active" : ""}`}
             onClick={() => goToSlide(index)}
-          ></span>
+          />
         ))}
       </div>
     </div>

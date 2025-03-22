@@ -1,16 +1,17 @@
 "use client";
 import CartItem from "@/app/cart/cartItem";
 import { Context } from "@/app/context/AddToCart";
+import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoCartOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
+import logoBlack from "../../assest/logoBlack.png";
 import OfferAlert from "../OfferAlert/OfferAlert";
 import { NavigationMenuDemo } from "../ui/menuDemo";
 import Styles from "./Header.module.css";
 import MobileMenu from "./MobileMenu";
-
 const Header = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
@@ -84,7 +85,12 @@ const Header = () => {
         <div className="grid grid-cols-12">
           <div className="col-span-2 flex items-center justify-center">
             <Link href="/" className="text-lg font-semibold">
-              E-Commerce
+              <Image
+                className="dark:hidden"
+                src={logoBlack}
+                width={200}
+                height={200}
+              />
             </Link>
           </div>
           <div className="relative col-span-6 flex items-center justify-end">
