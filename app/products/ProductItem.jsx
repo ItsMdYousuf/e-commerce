@@ -8,7 +8,7 @@ import Button from "../../components/Buttons/Button";
 import { Context } from "../context/AddToCart";
 
 const ProductItem = ({ singleProduct }) => {
-  const { addToCart, handleAddToCart } = useContext(Context); // Get addToCart from context
+  const { handleAddToCart } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
 
@@ -28,41 +28,42 @@ const ProductItem = ({ singleProduct }) => {
   const roundedRating = Math.round(rating);
 
   return (
-    <div className="group overflow-hidden border-2 bg-gray-100">
+    <div className="group mx-auto max-w-xs overflow-hidden border-2 bg-gray-100">
       <div className="group relative flex flex-col items-center justify-center overflow-hidden pb-2">
         <img
           src={thumbnail}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+          loading="lazy"
+          className="h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
           onError={(e) => (e.target.src = "/fallback-image.jpg")}
         />
 
-        <div className="absolute right-3 top-3 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+        <div className="absolute right-2 top-2 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
           <IoEyeOutline
-            className="h-8 w-8 cursor-pointer rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
+            className="h-6 w-6 cursor-pointer rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
             onClick={openModal}
             aria-label="View Details"
           />
           <GoHeart
-            className="h-8 w-8 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
+            className="h-6 w-6 rounded-md bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-black hover:text-white"
             aria-label="Add to Wishlist"
           />
         </div>
         <button
-          className="translate-y-14 bg-black px-5 py-2 capitalize text-white transition-all duration-150 ease-out group-hover:translate-y-0"
+          className="translate-y-10 bg-black px-4 py-1 text-sm capitalize text-white transition-all duration-150 ease-out group-hover:translate-y-0"
           onClick={() => handleAddToCart(singleProduct)}
         >
           Add to cart
         </button>
       </div>
       <div className="border-t-2 p-2">
-        <h4 className="text-lg font-semibold">
+        <h4 className="text-base font-semibold">
           <Link href={`/products/${id}`} className="hover:underline">
             {title}
           </Link>
         </h4>
         <div className="flex flex-col justify-between">
-          <p className="text-lg">${price}</p>
+          <p className="text-base">${price}</p>
           <div className="flex items-center">
             {Array.from({ length: 5 }).map((_, i) => (
               <FaStar
@@ -70,7 +71,7 @@ const ProductItem = ({ singleProduct }) => {
                 className={`text-${i < roundedRating ? "yellow-500" : "gray-300"}`}
               />
             ))}
-            <p className="ml-2 text-sm text-gray-600">
+            <p className="ml-1 text-xs text-gray-600">
               ({reviews.length} reviews)
             </p>
           </div>
@@ -85,7 +86,7 @@ const ProductItem = ({ singleProduct }) => {
         >
           <div
             ref={modalRef}
-            className="relative m-5 w-96 rounded-md bg-white p-6 shadow-lg"
+            className="relative m-5 w-80 rounded-md bg-white p-4 shadow-lg"
             tabIndex={-1}
           >
             <button
@@ -98,16 +99,16 @@ const ProductItem = ({ singleProduct }) => {
             <img
               src={thumbnail}
               alt={title}
-              className="mb-4"
+              loading="lazy"
+              className="mb-3"
               onError={(e) => (e.target.src = "/fallback-image.jpg")}
             />
-            <h3 className="text-2xl font-semibold">{title}</h3>
-            <p className="mt-2 text-gray-700">{description}</p>
-            <p className="mt-4 text-lg font-bold">${price}</p>
-            <Button
-              onClick={() => handleAddToCart(singleProduct)}
-              children="Add to Cart"
-            />
+            <h3 className="text-xl font-semibold">{title}</h3>
+            <p className="mt-1 text-sm text-gray-700">{description}</p>
+            <p className="mt-2 text-lg font-bold">${price}</p>
+            <Button onClick={() => handleAddToCart(singleProduct)}>
+              Add to Cart
+            </Button>
           </div>
         </div>
       )}

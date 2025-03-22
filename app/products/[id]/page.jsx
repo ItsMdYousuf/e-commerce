@@ -2,9 +2,29 @@
 import { Context } from "@/app/context/AddToCart";
 import Button from "@/components/Buttons/Button";
 import Title from "@/components/Title";
+import { AnimatePresence, motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+
+// Variants for container and items
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.2,
+      duration: 0.5,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
 const ProductsDetails = ({ singleProduct }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
@@ -21,14 +41,12 @@ const ProductsDetails = ({ singleProduct }) => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        console.log(result); // Check the API response
         setProduct(result);
 
         // Set the main image to the first image or thumbnail
         setMainImage(
           result?.images?.[0] || result.thumbnail || "/fallback-image.jpg",
         );
-
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -49,6 +67,7 @@ const ProductsDetails = ({ singleProduct }) => {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
+
   const {
     images = [],
     title = "Unknown Title",
@@ -67,35 +86,48 @@ const ProductsDetails = ({ singleProduct }) => {
   } = product;
 
   return (
-    <div className="px-4">
+    <motion.div
+      className="px-4"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       <main className="py-6">
-        <div className="item-center container mx-auto flex flex-col gap-8 rounded-lg bg-white py-4 shadow-lg md:flex-row">
-          {/* Product Image */}
-          <div className="flex-1">
+        <motion.div
+          className="container mx-auto flex flex-col gap-8 rounded-lg bg-white py-6 shadow-2xl md:flex-row"
+          variants={itemVariants}
+        >
+          {/* Product Image Section */}
+          <motion.div className="flex-1" variants={itemVariants}>
             <div className="w-full p-6">
-              <img
+              <motion.img
                 src={mainImage || "/fallback-image.jpg"} // Use mainImage or fallback
                 alt={title}
                 className="h-60 w-full rounded-lg object-contain lg:h-96"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
               />
             </div>
-            <div className="mx-auto mt-6 flex justify-center gap-6">
-              <div className="mx-auto mt-6 flex justify-center gap-2">
-                {images.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img || "/fallback-image.jpg"} // Use fallback for invalid images
-                    alt={`${title} - ${index + 1}`}
-                    className="h-16 w-16 cursor-pointer rounded-lg object-cover"
-                    onClick={() => setMainImage(img)} // Update main image on click
-                  />
-                ))}
-              </div>
+            <div className="mx-auto mt-6 flex justify-center gap-4">
+              {images.map((img, index) => (
+                <motion.img
+                  key={index}
+                  src={img || "/fallback-image.jpg"}
+                  alt={`${title} - ${index + 1}`}
+                  className="h-16 w-16 cursor-pointer rounded-lg border object-cover hover:shadow-md"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setMainImage(img)}
+                />
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Product Details */}
-          <div className="flex-2 flex w-full flex-col justify-between p-6 md:w-1/2">
+          {/* Product Details Section */}
+          <motion.div
+            className="flex-2 flex w-full flex-col justify-between p-6 md:w-1/2"
+            variants={itemVariants}
+          >
             <div>
               <h1 className="mb-4 text-3xl font-bold">{title}</h1>
               <p className="mb-4 text-gray-600">{description}</p>
@@ -105,36 +137,34 @@ const ProductsDetails = ({ singleProduct }) => {
                   ${price}
                 </span>
                 <span className="ml-4 text-sm text-gray-500 line-through">
-                  ${price + price * (discountPercentage / 100)}
+                  ${(price + price * (discountPercentage / 100)).toFixed(2)}
                 </span>
               </div>
 
               <div className="mb-6 flex space-x-4">
-                <Button
-                  onClick={() => handleAddToCart(product)} // Pass product details
-                  children="Add to Cart"
-                />
+                <Button onClick={() => handleAddToCart(product)}>
+                  Add to Cart
+                </Button>
                 <button className="rounded-lg bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400">
                   Wishlist
                 </button>
               </div>
-              {/* Rating */}
-              <div className="flex flex-col gap-4">
+              {/* Additional Details */}
+              <div className="space-y-2">
                 <h3>
-                  <span className="font-semibold">Brand:</span>
+                  <span className="font-semibold">Brand: </span>
                   {brand}
                 </h3>
                 <h3>
-                  <span className="font-semibold">Availability Status :</span>
+                  <span className="font-semibold">Availability: </span>
                   {availabilityStatus}
                 </h3>
-                {/* here rating component */}
                 <h3>
-                  <span className="font-semibold">Warranty Information:</span>
+                  <span className="font-semibold">Warranty: </span>
                   {warrantyInformation}
                 </h3>
                 <h3>
-                  <span className="font-semibold">Shipping Information: </span>
+                  <span className="font-semibold">Shipping: </span>
                   {shippingInformation}
                 </h3>
                 <h3>
@@ -143,45 +173,60 @@ const ProductsDetails = ({ singleProduct }) => {
                 </h3>
               </div>
             </div>
-          </div>
-        </div>
-        {/* Reviews section */}
-        <section>
-          <Title titleName="Reviews" className="" />
-          <div>
+          </motion.div>
+        </motion.div>
+
+        {/* Reviews Section */}
+        <motion.section variants={itemVariants} className="mt-10">
+          <Title titleName="Customer Reviews" className="mb-6" />
+          <AnimatePresence>
             {reviews.map((review, index) => (
-              <div key={index} className="my-2 w-full">
-                <div className="border-2 border-gray-300 p-2">
-                  <div className="flex">
-                    <h2 className="leading-1 font-semibold capitalize">
-                      {review.reviewerName}
-                    </h2>
-                    <p className="pl-5 text-gray-600">{review.reviewerEmail}</p>
-                  </div>
-                  <div className="text-sm">
-                    <p className="text-gray-500">Date: {review.date}</p>
-                    <p className="">Comment: {review.comment}</p>
-                    <div className="flex items-center">
-                      <span className="mr-2 font-semibold">Rating:</span>
-                      <div className="flex">
-                        {/* Dynamically render stars based on review.rating */}
-                        {Array.from({ length: review.rating }, (_, i) => (
-                          <FaStar
-                            key={i}
-                            className="text-yellow-500"
-                            size={20}
-                          />
-                        ))}
-                      </div>
+              <motion.div
+                key={index}
+                className="mx-auto mb-6 w-[200px] rounded-lg bg-gray-50 p-6 shadow-md xl:w-[500px]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <div className="flex items-center justify-between border-b pb-3">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white">
+                      {review.reviewerName?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-semibold capitalize">
+                        {review.reviewerName}
+                      </h2>
+                      <p className="text-xs text-gray-500">
+                        {review.reviewerEmail}
+                      </p>
                     </div>
                   </div>
+                  <div className="flex items-center">
+                    {Array.from({ length: review.rating }, (_, i) => (
+                      <FaStar key={i} className="text-yellow-500" size={18} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+                <div className="mt-4">
+                  <p className="text-sm text-gray-600">{review.comment}</p>
+                </div>
+                <div className="mt-3 text-right">
+                  <p className="text-xs text-gray-400">
+                    Reviewed on: {review.date}
+                  </p>
+                </div>
+              </motion.div>
             ))}
-          </div>
-        </section>
+          </AnimatePresence>
+        </motion.section>
       </main>
-    </div>
+    </motion.div>
   );
 };
 
