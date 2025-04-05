@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useContext } from "react";
 import { Context } from "../context/AddToCart";
 import styles from "./Cart.module.css"; // Import the CSS module
@@ -51,9 +52,12 @@ const CartItem = () => {
           </div>
           <p>Lorem ipsum dolor sit amet.</p>
           <div className="flex flex-row justify-between py-2">
-            <button className="rounded-md border-[1px] border-gray-300 px-3 py-2">
+            <Link
+              href="/viewCart"
+              className="rounded-md border-[1px] border-gray-300 px-3 py-2"
+            >
               View Cart
-            </button>
+            </Link>
             <button className="rounded-md border-[1px] border-gray-300 bg-black px-3 py-2 text-white">
               Check out
             </button>
