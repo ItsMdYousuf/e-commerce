@@ -32,9 +32,12 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://dummyjson.com/products");
+        const response = await fetch(
+          "https://ecommerce-backend-sand-eight.vercel.app/products",
+        );
         const result = await response.json();
-        setData(result.products || []);
+        setData(result || []);
+        console.log("Fetched data:", result);
       } catch (error) {
         console.error("Error fetching products:", error);
         setData([]);
@@ -46,19 +49,24 @@ const Products = () => {
     fetchData();
   }, []);
 
-  const handleShowMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 8, data.length));
-  };
-
+  // Filter using the correct key (productCategory)
   const filteredProducts = data
     .filter((product) =>
-      selectedCategory === "all" ? true : product.category === selectedCategory,
+      selectedCategory === "all"
+        ? true
+        : product.productCategory === selectedCategory,
     )
     .sort((a, b) => {
-      if (sortBy === "price-asc") return a.price - b.price;
-      if (sortBy === "price-desc") return b.price - a.price;
+      if (sortBy === "price-asc")
+        return parseFloat(a.productAmount) - parseFloat(b.productAmount);
+      if (sortBy === "price-desc")
+        return parseFloat(b.productAmount) - parseFloat(a.productAmount);
       return 0;
     });
+
+  const handleShowMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 8, filteredProducts.length));
+  };
 
   return (
     <div className="container mx-auto px-4 pb-12 md:px-6 lg:px-8">
@@ -109,12 +117,22 @@ const Products = () => {
           <AnimatePresence>
             {filteredProducts.slice(0, visibleCount).map((item) => (
               <motion.div
-                key={item.id}
+                key={item._id}
                 variants={itemVariants}
                 exit={{ opacity: 0, y: 20 }}
                 className="transform transition-all hover:scale-105 hover:shadow-xl"
               >
-                <ProductItem singleProduct={item} />
+                <ProductItem
+                  singleProduct={{
+                    id: item._id,
+                    title: item.productTitle,
+                    price: parseFloat(item.productAmount),
+                    description: item.productDescription,
+                    image: item.image, // mapping product image
+                    category: item.productCategory,
+                    // add other fields as needed
+                  }}
+                />
               </motion.div>
             ))}
           </AnimatePresence>

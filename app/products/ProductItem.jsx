@@ -11,19 +11,13 @@ const ProductItem = ({ singleProduct }) => {
   const { handleAddToCart } = useContext(Context);
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
+  const imgUrl = "https://ecommerce-backend-sand-eight.vercel.app/";
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const {
-    thumbnail = "/fallback-image.jpg",
-    title = "Unknown Title",
-    price = 0,
-    rating = 0,
-    description = "No description available.",
-    reviews = [],
-    id,
-  } = singleProduct;
+  // Access properties using correct keys from new product structure
+  const { id, title, image, price, rating, description } = singleProduct || {};
 
   const roundedRating = Math.round(rating);
 
@@ -31,11 +25,10 @@ const ProductItem = ({ singleProduct }) => {
     <div className="group mx-auto max-w-xs overflow-hidden border-2 bg-gray-100">
       <div className="group relative flex flex-col items-center justify-center overflow-hidden pb-2">
         <img
-          src={thumbnail}
+          src={imgUrl + image}
           alt={title}
           loading="lazy"
-          className="h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-          onError={(e) => (e.target.src = "/fallback-image.jpg")}
+          className="h-52 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
         />
 
         <div className="absolute right-2 top-2 flex translate-x-full transform flex-col items-center space-y-2 opacity-0 transition-all duration-300 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
@@ -71,9 +64,9 @@ const ProductItem = ({ singleProduct }) => {
                 className={`text-${i < roundedRating ? "yellow-500" : "gray-300"}`}
               />
             ))}
-            <p className="ml-1 text-xs text-gray-600">
+            {/* <p className="ml-1 text-xs text-gray-600">
               ({reviews.length} reviews)
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
@@ -97,7 +90,7 @@ const ProductItem = ({ singleProduct }) => {
               ×
             </button>
             <img
-              src={thumbnail}
+              src={image}
               alt={title}
               loading="lazy"
               className="mb-3"
