@@ -4,8 +4,9 @@ import { createContext, useState, useEffect } from "react";
 export const Context = createContext(null);
 
 function GlobalState({ children }) {
-   const [addCarts, setAddCarts] = useState([]);
+  const [addCarts, setAddCarts] = useState([]);
 
+<<<<<<< HEAD
    // Load cart from localStorage on mount
    useEffect(() => {
       const savedCart = localStorage.getItem("addCarts");
@@ -86,6 +87,45 @@ function GlobalState({ children }) {
          {children}
       </Context.Provider>
    );
+=======
+  // add to cart product item
+  function handleAddToCart(getCurrentItem) {
+    let copyProducts = [...addCarts];
+    const indexOfCurrentItem = copyProducts.findIndex(
+      (productItem) => productItem.id === getCurrentItem.id,
+    );
+
+    console.log(indexOfCurrentItem);
+
+    if (indexOfCurrentItem === -1) {
+      copyProducts.push(getCurrentItem);
+    }
+
+    setAddCarts(copyProducts);
+  }
+
+  // remove from cart product item
+  function handleRemoveFromCart(getCurrentItem) {
+    let copyProducts = [...addCarts];
+    copyProducts = copyProducts.filter(
+      (productItem) => productItem.id != getCurrentItem,
+    );
+    setAddCarts(copyProducts);
+    localStorage.setItem("addCarts", JSON.stringify(copyProducts));
+  }
+
+  useEffect(() => {
+    setAddCarts(JSON.parse(localStorage.getItem("addCart")) || []);
+  }, []);
+
+  return (
+    <Context.Provider
+      value={{ addCarts, handleAddToCart, handleRemoveFromCart }}
+    >
+      {children}
+    </Context.Provider>
+  );
+>>>>>>> 902aa6a0f83f0e061c4d2b1aab764a07358d6e8b
 }
 
 export default GlobalState;

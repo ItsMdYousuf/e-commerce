@@ -4,6 +4,11 @@ import Link from "next/link";
 import { useContext } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { Context } from "../context/AddToCart";
+<<<<<<< HEAD
+=======
+import styles from "./Cart.module.css"; // Import the CSS module
+import Link from "next/link";
+>>>>>>> 902aa6a0f83f0e061c4d2b1aab764a07358d6e8b
 
 const CartItem = () => {
   const backendurl = "https://ecommerce-backend-sand-eight.vercel.app";
@@ -150,9 +155,24 @@ const CartItem = () => {
               Continue Shopping
             </Link>
           </div>
+<<<<<<< HEAD
         )}
       </motion.div>
     </AnimatePresence>
+=======
+          <p>Lorem ipsum dolor sit amet.</p>
+          <div className="flex flex-row justify-between py-2">
+            <Link href={'/cart'} className="rounded-md border-[1px] border-gray-300 px-3 py-2">
+              View Cart
+            </Link>
+            <button className="rounded-md border-[1px] border-gray-300 bg-black px-3 py-2 text-white">
+              Check out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> 902aa6a0f83f0e061c4d2b1aab764a07358d6e8b
   );
 };
 
