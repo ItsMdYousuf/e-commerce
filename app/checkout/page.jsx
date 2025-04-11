@@ -94,13 +94,16 @@ const Checkout = () => {
       };
 
       // Send order to backend
-      const response = await fetch("http://localhost:5000/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://ecommerce-backend-sand-eight.vercel.app/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newOrder),
         },
-        body: JSON.stringify(newOrder),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
