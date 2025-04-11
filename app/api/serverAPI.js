@@ -1,0 +1,1 @@
+const serverAPI = "https://ecommerce-backend-hazel-six.vercel.app/"

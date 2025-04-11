@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Products from "@/app/products/page";
 import Code from "@/components/Code";
 import Features from "@/components/Features";
@@ -6,21 +7,52 @@ import OfferAds from "@/components/OfferAlert/OfferAds";
 import Slider from "@/components/Slider/Slider";
 
 export default function Home() {
+  const [sliders, setSliders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const images = [
-    "https://images.pexels.com/photos/29565594/pexels-photo-29565594/free-photo-of-surfers-observing-waves-at-taghazout-beach.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  useEffect(() => {
+    const fetchSliders = async () => {
+      try {
+        const response = await fetch(
+          "https://ecommerce-backend-sand-eight.vercel.app/sliders"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch sliders");
+        }
+        const data = await response.json();
+        setSliders(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    "https://plus.unsplash.com/premium_photo-1673264933048-3bd3f5b86f9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    fetchSliders();
+  }, []);
 
-    "https://plus.unsplash.com/premium_photo-1686064771021-fbd6e301a0e4?q=80&w=1793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ]
+  if (loading) {
+    return (
+      <div className="h-[25rem] flex justify-center items-center">
+        <div className="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div>
-      <Slider autoplayInterval="2000" images={images} />
+      <Slider
+        autoplayInterval={5000}
+        images={sliders.map((slider) => slider.image)}
+      />
       <Products />
       <OfferAds />
       <Features />
     </div>
-
   );
 }
