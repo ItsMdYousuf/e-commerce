@@ -7,23 +7,29 @@ export const Context = createContext(null);
 // Helper function to load cart from localStorage
 const loadCartFromLocalStorage = () => {
    try {
-      const savedCart = localStorage.getItem("addCarts"); // Use consistent key "addCarts"
-      return savedCart ? JSON.parse(savedCart) : []; // Parse or return empty array
+      // Ensure this runs only on the client
+      if (typeof window !== "undefined") {
+         const savedCart = localStorage.getItem("addCarts"); // Use consistent key "addCarts"
+         return savedCart ? JSON.parse(savedCart) : []; // Parse or return empty array
+      }
    } catch (error) {
       console.error("Failed to parse cart from localStorage:", error);
-      return []; // Return empty array on error
    }
+   return []; // Return empty array on error or server-side
 };
 
 // Global state provider component
 function GlobalState({ children }) {
-   // Initialize state directly from localStorage
+   // Initialize state directly from localStorage using the helper function
    const [addCarts, setAddCarts] = useState(() => loadCartFromLocalStorage());
 
    // Effect to save cart to localStorage whenever it changes
    useEffect(() => {
       try {
-         localStorage.setItem("addCarts", JSON.stringify(addCarts));
+         // Ensure this runs only on the client
+         if (typeof window !== "undefined") {
+            localStorage.setItem("addCarts", JSON.stringify(addCarts));
+         }
       } catch (error) {
          console.error("Failed to save cart to localStorage:", error);
       }
@@ -41,11 +47,9 @@ function GlobalState({ children }) {
             // If item is not in cart, add it with quantity 1
             copyProducts.push({ ...getCurrentItem, quantity: 1 });
          } else {
-            // If item is already in cart, optionally increase quantity (or handle as needed)
-            // For now, we just ensure it exists. Quantity update is handled separately.
-            // You could increment quantity here if desired:
-            // copyProducts[indexOfCurrentItem].quantity += 1;
-            console.log("Item already in cart:", getCurrentItem.id);
+            // If item is already in cart, increment quantity
+            copyProducts[indexOfCurrentItem].quantity += 1;
+            console.log("Increased quantity for item:", getCurrentItem.id);
          }
          return copyProducts; // Return the new state
       });
@@ -77,6 +81,16 @@ function GlobalState({ children }) {
       });
    }
 
+   // --- Clear Cart Function (Added) ---
+   const clearCart = () => {
+      console.log("Clearing cart..."); // Optional: for debugging
+      setAddCarts([]); // Set the cart state to an empty array
+      // Clear localStorage using the correct key
+      if (typeof window !== "undefined") {
+         localStorage.removeItem("addCarts");
+      }
+   };
+
    // Calculate the total price of the cart using useMemo for optimization
    const cartTotal = useMemo(() => {
       return addCarts.reduce((total, item) => {
@@ -94,7 +108,8 @@ function GlobalState({ children }) {
             addCarts,
             handleAddToCart,
             handleRemoveFromCart,
-            updateQuantity, // Provide the new function
+            updateQuantity,
+            clearCart, // Provide the clearCart function
             cartTotal, // Provide the calculated total
          }}
       >

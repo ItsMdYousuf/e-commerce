@@ -118,7 +118,7 @@ const CartItem = () => {
 
                   {/* Right side: Quantity Controls and Remove Button */}
                   {/* Aligns controls to the end on larger screens, centers below on small */}
-                  <div className="flex w-full flex-row items-center justify-between gap-4 sm:w-auto sm:flex-col sm:items-end sm:justify-start">
+                  <div className="flex w-full flex-col-reverse items-center justify-between gap-4 sm:w-auto sm:flex-col-reverse sm:items-end sm:justify-start">
                     {/* Quantity Controls */}
                     <div className="flex items-center rounded-md border border-gray-300 bg-white shadow-sm">
                       <button
@@ -151,7 +151,7 @@ const CartItem = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>{" "}
+            </div>
             {/* End Cart Items List */}
             {/* Cart Summary Section */}
             <motion.div
