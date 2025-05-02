@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
               <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-                E-commerce
+                AL--BAZAR
               </span>
             </a>
           </div>
@@ -68,9 +68,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8 dark:border-gray-700" />
+        <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <span className="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
             © 2023{" "}
             <a href="https://flowbite.com/" className="hover:underline">
               Flowbite™

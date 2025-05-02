@@ -32,9 +32,7 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://ecommerce-backend-sand-eight.vercel.app/products",
-        );
+        const response = await fetch("http://localhost:5000/products");
         const result = await response.json();
         setData(result || []);
         console.log("Fetched data:", result);

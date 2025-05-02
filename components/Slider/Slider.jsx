@@ -5,7 +5,6 @@ import "./Slider.css";
 const Slider = ({ images, autoplayInterval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
   // Autoplay functionality
   useEffect(() => {
     let autoplay;
@@ -43,7 +42,7 @@ const Slider = ({ images, autoplayInterval = 5000 }) => {
         {images.map((image, index) => (
           <div key={index} className="slider-slide" style={{ width: "100%" }}>
             <img
-              src={`https://ecommerce-backend-sand-eight.vercel.app${image}`}
+              src={`http://localhost:5000${image}`}
               alt={`Slide ${index + 1}`}
               className="slider-image"
             />
