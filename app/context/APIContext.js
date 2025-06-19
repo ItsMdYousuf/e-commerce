@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
-   const baseUrl = "https://ecommerce-backend-sand-eight.vercel.app/" || "http://localhost:3000/api";
+   const baseUrl = "https://ecommerce-backend-sand-eight.vercel.app/"
 
    const get = async (endpoint) => {
       const res = await fetch(`${baseUrl}${endpoint}`);
