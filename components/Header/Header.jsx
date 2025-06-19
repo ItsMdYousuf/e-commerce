@@ -342,7 +342,7 @@ const Header = () => {
                         >
                           <div className="flex items-center gap-4">
                             <img
-                              src={"http://localhost:5000" + item.image}
+                              src={+item.image}
                               alt={item.title}
                               className="h-16 w-16 rounded-md object-cover"
                             />

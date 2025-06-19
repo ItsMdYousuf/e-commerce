@@ -15,7 +15,7 @@ export default function Home() {
     const fetchSliders = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/sliders"
+          "https://ecommerce-backend-sand-eight.vercel.app/sliders"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch sliders");

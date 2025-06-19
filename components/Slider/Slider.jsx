@@ -42,7 +42,7 @@ const Slider = ({ images, autoplayInterval = 5000 }) => {
         {images.map((image, index) => (
           <div key={index} className="slider-slide" style={{ width: "100%" }}>
             <img
-              src={`http://localhost:5000${image}`}
+              src={`https://ecommerce-backend-sand-eight.vercel.app${image}`}
               alt={`Slide ${index + 1}`}
               className="slider-image"
             />

@@ -21,7 +21,10 @@ const Cart = () => {
                 <div className="flex w-full space-x-2 sm:space-x-4">
                   <img
                     className="dark:border- h-20 w-20 flex-shrink-0 rounded object-cover outline-none dark:bg-gray-500 sm:h-32 sm:w-32"
-                    src={"http://localhost:5000" + item.image}
+                    src={
+                      "https://ecommerce-backend-sand-eight.vercel.app" +
+                      item.image
+                    }
                     alt={item.title}
                   />
                   <div className="flex w-full flex-col justify-between pb-4">

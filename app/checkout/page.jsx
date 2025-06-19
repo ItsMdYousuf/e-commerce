@@ -144,7 +144,7 @@ const Checkout = () => {
 
       // Send order to backend
       const response = await fetch(
-        "http://localhost:5000/orders", // Replace with your actual backend endpoint. Use a constant!
+        "https://ecommerce-backend-sand-eight.vercel.app/orders", // Replace with your actual backend endpoint. Use a constant!
         {
           method: "POST",
           headers: {

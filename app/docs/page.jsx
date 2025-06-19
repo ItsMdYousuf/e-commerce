@@ -40,7 +40,10 @@ const Docs = () => {
           <div key={product._id}>
             <p>Title: {product.productTitle}</p>
             <p>Amount: {product.productAmount}</p>
-            <img src={`http://localhost:5000${product.image}`} alt="img" />
+            <img
+              src={`https://ecommerce-backend-sand-eight.vercel.app${product.image}`}
+              alt="img"
+            />
           </div>
         ))}
       </div>
