@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
-
+import { ApiContext } from "./context/APIContext";
 import { DataFetchProvider } from "./context/DataFetchContext";
 import GlobalState, { AddToCartProvider } from "./context/AddToCart";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
@@ -41,20 +41,23 @@ export default function RootLayout({ children }) {
         style={{ fontFamily: `var(--font-primary), sans-serif` }}
       >
         <>
-          <DataFetchProvider>
-            <GlobalState>
-              <Header />
-              <div className="selection:bg-pink-300 pt-[4rem] selection:text-white">
-                <div className="relative">
-                  {children}
-                  <div className="absolute bottom-2 right-5">
-                    <ScrollToTop />
+          <ApiContext >
+
+            <DataFetchProvider>
+              <GlobalState>
+                <Header />
+                <div className="selection:bg-pink-300 pt-[4rem] selection:text-white">
+                  <div className="relative">
+                    {children}
+                    <div className="absolute bottom-2 right-5">
+                      <ScrollToTop />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <Footer />
-            </GlobalState>
-          </DataFetchProvider>
+                <Footer />
+              </GlobalState>
+            </DataFetchProvider>
+          </ApiContext>
         </>
       </body>
     </html>

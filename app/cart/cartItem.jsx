@@ -8,7 +8,7 @@ import { Context } from "../context/AddToCart"; // Adjust path if needed
 
 const CartItem = () => {
   // Define the backend URL (ensure this is correct)
-  const backendurl = "http://localhost:5000";
+  const backendurl = "https://ecommerce-backend-sand-eight.vercel.app";
 
   // Get cart state and functions from context
   const { addCarts, handleRemoveFromCart, updateQuantity, cartTotal } =

@@ -17,7 +17,9 @@ const SingleProduct = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`http://localhost:5000/products/${id}`);
+        const res = await fetch(
+          `https://ecommerce-backend-sand-eight.vercel.app/products/${id}`,
+        );
         if (!res.ok) {
           throw new Error(`Failed to fetch product: ${res.status}`);
         }

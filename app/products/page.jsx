@@ -5,8 +5,8 @@ import Title from "@/components/Title";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ProductSkeleton from "../../components/ProductSkeleton";
+import { useApi } from "../context/APIContext";
 import ProductItem from "./ProductItem";
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -16,6 +16,9 @@ const containerVariants = {
     },
   },
 };
+
+const { get } = useApi();
+get("https://ecommerce-backend-sand-eight.vercel.app/products");
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -32,7 +35,7 @@ const Products = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/products");
+        const response = await fetch();
         const result = await response.json();
         setData(result || []);
         console.log("Fetched data:", result);
