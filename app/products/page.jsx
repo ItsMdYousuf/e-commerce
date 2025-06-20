@@ -37,7 +37,6 @@ const Products = () => {
         );
         const result = await response.json();
         setData(result || []);
-        console.log("Fetched data:", result);
       } catch (error) {
         console.error("Error fetching products:", error);
         setData([]);
